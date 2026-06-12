@@ -1,10 +1,15 @@
 import { StatCard } from '../../components/ui/StatCard'
+import { useLeaderboard } from '../leaderboard/useLeaderboard'
 import { usePredictions } from './usePredictions'
 
 const iconClassName = 'size-5'
 
 export function DashboardPredictionStats() {
   const { predictions, isLoading } = usePredictions()
+  const {
+    currentUserEntry,
+    isLoading: isLeaderboardLoading,
+  } = useLeaderboard()
   const totalPoints = predictions.reduce(
     (total, prediction) => total + prediction.pointsAwarded,
     0,
@@ -25,8 +30,14 @@ export function DashboardPredictionStats() {
       />
       <StatCard
         label="Posición"
-        value="—"
-        detail="Se calculará en la fase de clasificación."
+        value={
+          isLeaderboardLoading
+            ? '…'
+            : currentUserEntry
+              ? `#${currentUserEntry.position}`
+              : '—'
+        }
+        detail="Según puntos, marcadores exactos y aciertos."
         icon={
           <svg className={iconClassName} viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M7 21v-6H3v6h4ZM14 21V9h-4v12h4ZM21 21V3h-4v18h4Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />

@@ -4,8 +4,8 @@ import { PublicOnlyRoute } from '../features/auth/PublicOnlyRoute'
 import { AppLayout } from '../layouts/AppLayout'
 import { AuthPage } from '../pages/AuthPage'
 import { DashboardPage } from '../pages/DashboardPage'
+import { LeaderboardPage } from '../pages/LeaderboardPage'
 import { MatchesPage } from '../pages/MatchesPage'
-import { PlaceholderPage } from '../pages/PlaceholderPage'
 import { PredictionsPage } from '../pages/PredictionsPage'
 import { ProfilePage } from '../pages/ProfilePage'
 import { RouteErrorPage } from '../pages/RouteErrorPage'
@@ -46,13 +46,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'clasificacion',
-            element: (
-              <PlaceholderPage
-                eyebrow="Próxima fase"
-                title="Clasificación"
-                description="El ranking general mostrará la posición y los puntos de cada participante."
-              />
-            ),
+            element: <LeaderboardPage />,
           },
           {
             path: 'perfil',

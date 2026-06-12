@@ -11,9 +11,19 @@ import { MatchCardSkeleton } from '../features/matches/MatchCardSkeleton'
 import { MatchesFilters } from '../features/matches/MatchesFilters'
 import type { MatchFilters } from '../features/matches/matches.types'
 import { useMatches } from '../features/matches/useMatches'
+import { hasMatchStarted } from '../features/matches/match-formatters'
+import { LockedPrediction } from '../features/predictions/LockedPrediction'
+import { PredictionForm } from '../features/predictions/PredictionForm'
+import { usePredictions } from '../features/predictions/usePredictions'
 
 export function MatchesPage() {
   const { matches, isLoading, errorMessage, reload } = useMatches()
+  const {
+    predictionsByMatchId,
+    isLoading: arePredictionsLoading,
+    errorMessage: predictionsError,
+    updatePrediction,
+  } = usePredictions()
   const [filters, setFilters] = useState<MatchFilters>({
     phase: '',
     group: '',
@@ -58,6 +68,15 @@ export function MatchesPage() {
         title="Partidos"
         description="Consulta todos los encuentros del Mundial, sus horarios y resultados."
       />
+
+      {predictionsError ? (
+        <p
+          role="alert"
+          className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800"
+        >
+          Los partidos cargaron, pero no pudimos consultar tus predicciones.
+        </p>
+      ) : null}
 
       {matches.length > 0 ? (
         <MatchesFilters
@@ -125,7 +144,27 @@ export function MatchesPage() {
           </h2>
           <div className="grid gap-4 xl:grid-cols-2">
             {dateMatches.map((match) => (
-              <MatchCard key={match.id} match={match} />
+              <MatchCard
+                key={match.id}
+                match={match}
+                predictionContent={
+                  arePredictionsLoading ? (
+                    <div className="border-t border-slate-100 pt-4">
+                      <div className="mx-auto h-10 w-40 animate-pulse rounded-xl bg-slate-100" />
+                    </div>
+                  ) : hasMatchStarted(match.matchDate) ? (
+                    <LockedPrediction
+                      prediction={predictionsByMatchId.get(String(match.id))}
+                    />
+                  ) : (
+                    <PredictionForm
+                      match={match}
+                      prediction={predictionsByMatchId.get(String(match.id))}
+                      onSaved={updatePrediction}
+                    />
+                  )
+                }
+              />
             ))}
           </div>
         </section>

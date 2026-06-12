@@ -11,9 +11,10 @@ import { TeamDisplay } from './TeamDisplay'
 
 type MatchCardProps = {
   match: Match
+  predictionContent?: ReactNode
 }
 
-export function MatchCard({ match }: MatchCardProps) {
+export function MatchCard({ match, predictionContent }: MatchCardProps) {
   const hasResult =
     isFinishedStatus(match.status) &&
     match.homeScore !== null &&
@@ -58,7 +59,7 @@ export function MatchCard({ match }: MatchCardProps) {
         <TeamDisplay team={match.awayTeam} />
       </div>
 
-      {!hasResult ? (
+      {predictionContent ?? (!hasResult ? (
         <p
           className={`border-t border-slate-100 pt-4 text-center text-xs font-semibold ${
             hasStarted ? 'text-slate-500' : 'text-brand-700'
@@ -68,7 +69,8 @@ export function MatchCard({ match }: MatchCardProps) {
             ? 'Predicciones cerradas: el partido ya comenzó'
             : 'Disponible para predecir en la siguiente fase'}
         </p>
-      ) : null}
+      ) : null)}
     </article>
   )
 }
+import type { ReactNode } from 'react'

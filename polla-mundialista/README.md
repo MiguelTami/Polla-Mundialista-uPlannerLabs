@@ -31,6 +31,28 @@ una clasificación interna de uPlanner Labs.
    npm run dev
    ```
 
+## Autenticación
+
+La aplicación incluye registro, inicio de sesión, cierre de sesión y protección
+de rutas con Supabase Auth.
+
+Antes de probar un registro nuevo, ejecuta en el SQL Editor de Supabase la
+migración:
+
+```text
+supabase/migrations/202606120001_create_profile_on_signup.sql
+```
+
+El trigger usa el campo `display_name` enviado durante el registro y crea el
+registro correspondiente en `public.profiles`.
+
+Si Auth responde `Database error creating new user`, ejecuta después la
+migración de reparación:
+
+```text
+supabase/migrations/202606120002_repair_profile_signup_trigger.sql
+```
+
 ## Scripts
 
 - `npm run dev`: inicia Vite en modo desarrollo.

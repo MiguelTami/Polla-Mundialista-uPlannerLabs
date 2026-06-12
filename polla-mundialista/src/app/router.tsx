@@ -5,6 +5,7 @@ import { AppLayout } from '../layouts/AppLayout'
 import { AuthPage } from '../pages/AuthPage'
 import { DashboardPage } from '../pages/DashboardPage'
 import { PlaceholderPage } from '../pages/PlaceholderPage'
+import { ProfilePage } from '../pages/ProfilePage'
 import { RouteErrorPage } from '../pages/RouteErrorPage'
 
 export const router = createBrowserRouter([
@@ -65,13 +66,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'perfil',
-            element: (
-              <PlaceholderPage
-                eyebrow="Próxima fase"
-                title="Perfil"
-                description="Aquí podrás gestionar tu información y revisar tu actividad en la polla."
-              />
-            ),
+            element: <ProfilePage />,
           },
         ],
       },

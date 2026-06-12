@@ -1,95 +1,107 @@
 import { Link } from 'react-router-dom'
-import { PageHeader } from '../components/ui/PageHeader'
-import { SystemStatusCard } from '../features/system-status/SystemStatusCard'
+import { EmptyState } from '../components/ui/EmptyState'
+import { StatCard } from '../components/ui/StatCard'
+import { useAuth } from '../features/auth/useAuth'
 
-const roadmap = [
-  {
-    number: '01',
-    title: 'Crea tu cuenta',
-    description: 'Regístrate e inicia sesión de forma segura con Supabase Auth.',
-  },
-  {
-    number: '02',
-    title: 'Predice los partidos',
-    description: 'Guarda tus marcadores antes del inicio de cada encuentro.',
-  },
-  {
-    number: '03',
-    title: 'Compite por el primer lugar',
-    description: 'Suma puntos y sigue tu posición en la clasificación general.',
-  },
-] as const
+const cardIconClass = 'size-5'
 
 export function DashboardPage() {
+  const { user } = useAuth()
+  const displayName =
+    typeof user?.user_metadata.display_name === 'string'
+      ? user.user_metadata.display_name.split(' ')[0]
+      : 'participante'
+
   return (
-    <div className="space-y-10">
-      <section className="overflow-hidden rounded-3xl bg-brand-950 px-6 py-10 text-white sm:px-10 lg:px-12 lg:py-14">
-        <div className="max-w-3xl">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-300">
-            Mundial FIFA 2026
-          </p>
-          <h1 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
-            Cada marcador cuenta.
-          </h1>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-brand-100 sm:text-lg">
-            Pronostica los resultados, acumula puntos y demuestra quién sabe más
-            de fútbol en uPlanner Labs.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/partidos"
-              className="rounded-xl bg-white px-5 py-3 text-sm font-bold text-brand-950 transition hover:bg-brand-100"
-            >
-              Ver partidos
-            </Link>
-            <Link
-              to="/clasificacion"
-              className="rounded-xl border border-brand-700 px-5 py-3 text-sm font-bold text-white transition hover:bg-brand-900"
-            >
-              Ver clasificación
-            </Link>
+    <div className="space-y-7">
+      <section className="overflow-hidden rounded-3xl bg-brand-950 px-6 py-9 text-white sm:px-9 lg:px-10">
+        <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-300">
+          Mundial FIFA 2026
+        </p>
+        <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
+          Hola, {displayName}
+        </h1>
+        <p className="mt-3 max-w-2xl leading-7 text-brand-100">
+          Tu cuenta está lista. Cuando publiquemos los partidos podrás comenzar
+          a registrar tus predicciones.
+        </p>
+        <Link
+          to="/partidos"
+          className="mt-6 inline-flex rounded-xl bg-white px-5 py-3 text-sm font-bold text-brand-950 transition hover:bg-brand-100"
+        >
+          Explorar partidos
+        </Link>
+      </section>
+
+      <section aria-labelledby="summary-title">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-wider text-brand-700">
+              Tu resumen
+            </p>
+            <h2 id="summary-title" className="mt-1 text-2xl font-black text-slate-950">
+              Estado de la polla
+            </h2>
           </div>
+        </div>
+        <div className="mt-5 grid gap-4 sm:grid-cols-3">
+          <StatCard
+            label="Puntos"
+            value="0"
+            detail="Se actualizarán después de los primeros resultados."
+            icon={
+              <svg className={cardIconClass} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M8 21h8M12 17v4M7 3h10v5a5 5 0 0 1-10 0V3ZM7 5H4v2a4 4 0 0 0 4 4M17 5h3v2a4 4 0 0 1-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            }
+          />
+          <StatCard
+            label="Posición"
+            value="—"
+            detail="Aparecerá cuando la clasificación tenga participantes."
+            icon={
+              <svg className={cardIconClass} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 21v-6H3v6h4ZM14 21V9h-4v12h4ZM21 21V3h-4v18h4Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+              </svg>
+            }
+          />
+          <StatCard
+            label="Predicciones"
+            value="0"
+            detail="Aquí verás cuántos partidos has pronosticado."
+            icon={
+              <svg className={cardIconClass} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m8 12 2.5 2.5L16 9M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            }
+          />
         </div>
       </section>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
-        <section>
-          <PageHeader
-            eyebrow="Cómo funciona"
-            title="Tu camino hacia la cima"
-            description="La base técnica está lista para construir el flujo principal del MVP."
-          />
-          <div className="mt-7 grid gap-4 sm:grid-cols-3">
-            {roadmap.map((item) => (
-              <article
-                key={item.number}
-                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div>
+          <p className="text-sm font-bold uppercase tracking-wider text-brand-700">
+            Próximos partidos
+          </p>
+          <h2 className="mt-1 text-xl font-black text-slate-950">
+            Prepara tus marcadores
+          </h2>
+        </div>
+        <div className="mt-5">
+          <EmptyState
+            title="Todavía no hay partidos disponibles"
+            description="Los encuentros aparecerán aquí en cuanto sean cargados en la plataforma."
+            action={
+              <Link
+                to="/partidos"
+                className="inline-flex rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50"
               >
-                <span className="text-sm font-black text-brand-600">
-                  {item.number}
-                </span>
-                <h2 className="mt-3 font-bold text-slate-950">{item.title}</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  {item.description}
-                </p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <aside className="space-y-4">
-          <SystemStatusCard />
-          <section className="rounded-2xl border border-brand-200 bg-brand-50 p-5">
-            <p className="text-xs font-bold uppercase tracking-wider text-brand-700">
-              Estado del proyecto
-            </p>
-            <p className="mt-2 font-bold text-brand-950">Fase 0 · Base técnica</p>
-            <p className="mt-2 text-sm leading-6 text-brand-800">
-              Arquitectura, navegación, estilos y conexión de datos configurados.
-            </p>
-          </section>
-        </aside>
-      </div>
+                Ir a partidos
+              </Link>
+            }
+          />
+        </div>
+      </section>
     </div>
   )
 }

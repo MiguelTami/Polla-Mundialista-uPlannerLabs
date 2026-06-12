@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import {
   formatMatchDate,
   formatMatchStatus,
@@ -73,4 +74,3 @@ export function MatchCard({ match, predictionContent }: MatchCardProps) {
     </article>
   )
 }
-import type { ReactNode } from 'react'

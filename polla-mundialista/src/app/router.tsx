@@ -6,6 +6,7 @@ import { AuthPage } from '../pages/AuthPage'
 import { DashboardPage } from '../pages/DashboardPage'
 import { MatchesPage } from '../pages/MatchesPage'
 import { PlaceholderPage } from '../pages/PlaceholderPage'
+import { PredictionsPage } from '../pages/PredictionsPage'
 import { ProfilePage } from '../pages/ProfilePage'
 import { RouteErrorPage } from '../pages/RouteErrorPage'
 
@@ -41,13 +42,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'predicciones',
-            element: (
-              <PlaceholderPage
-                eyebrow="Próxima fase"
-                title="Mis predicciones"
-                description="Este espacio reunirá tus pronósticos, su estado y los puntos obtenidos."
-              />
-            ),
+            element: <PredictionsPage />,
           },
           {
             path: 'clasificacion',

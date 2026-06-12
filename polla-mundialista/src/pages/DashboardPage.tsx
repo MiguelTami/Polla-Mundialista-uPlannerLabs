@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import { EmptyState } from '../components/ui/EmptyState'
 import { StatCard } from '../components/ui/StatCard'
 import { useAuth } from '../features/auth/useAuth'
+import { UpcomingMatches } from '../features/matches/UpcomingMatches'
 
 const cardIconClass = 'size-5'
 
@@ -88,18 +88,7 @@ export function DashboardPage() {
           </h2>
         </div>
         <div className="mt-5">
-          <EmptyState
-            title="Todavía no hay partidos disponibles"
-            description="Los encuentros aparecerán aquí en cuanto sean cargados en la plataforma."
-            action={
-              <Link
-                to="/partidos"
-                className="inline-flex rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50"
-              >
-                Ir a partidos
-              </Link>
-            }
-          />
+          <UpcomingMatches />
         </div>
       </section>
     </div>

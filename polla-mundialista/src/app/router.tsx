@@ -4,6 +4,7 @@ import { PublicOnlyRoute } from '../features/auth/PublicOnlyRoute'
 import { AppLayout } from '../layouts/AppLayout'
 import { AuthPage } from '../pages/AuthPage'
 import { DashboardPage } from '../pages/DashboardPage'
+import { MatchesPage } from '../pages/MatchesPage'
 import { PlaceholderPage } from '../pages/PlaceholderPage'
 import { ProfilePage } from '../pages/ProfilePage'
 import { RouteErrorPage } from '../pages/RouteErrorPage'
@@ -36,13 +37,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'partidos',
-            element: (
-              <PlaceholderPage
-                eyebrow="Próxima fase"
-                title="Partidos"
-                description="Aquí podrás consultar el calendario, filtrar por fase y registrar tus marcadores."
-              />
-            ),
+            element: <MatchesPage />,
           },
           {
             path: 'predicciones',

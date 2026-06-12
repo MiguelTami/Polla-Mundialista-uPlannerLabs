@@ -53,6 +53,12 @@ migración de reparación:
 supabase/migrations/202606120002_repair_profile_signup_trigger.sql
 ```
 
+Para que los usuarios autenticados puedan consultar equipos y partidos, ejecuta:
+
+```text
+supabase/migrations/202606120003_allow_match_calendar_read.sql
+```
+
 ## Scripts
 
 - `npm run dev`: inicia Vite en modo desarrollo.

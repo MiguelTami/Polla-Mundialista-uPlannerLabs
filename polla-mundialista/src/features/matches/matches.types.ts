@@ -1,0 +1,25 @@
+export type Team = {
+  id: string | number
+  name: string
+  groupName: string | null
+  flagUrl: string | null
+}
+
+export type MatchStatus = 'scheduled' | 'live' | 'finished' | string
+
+export type Match = {
+  id: string | number
+  phase: string
+  groupName: string | null
+  matchDate: string
+  homeScore: number | null
+  awayScore: number | null
+  status: MatchStatus
+  homeTeam: Team | null
+  awayTeam: Team | null
+}
+
+export type MatchFilters = {
+  phase: string
+  group: string
+}

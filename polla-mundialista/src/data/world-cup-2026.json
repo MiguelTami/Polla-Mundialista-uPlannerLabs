@@ -1,0 +1,1182 @@
+{
+  "teams": [
+    {
+      "fifaCode": "MEX",
+      "name": "México",
+      "groupName": "A",
+      "flagCode": "mx",
+      "fifaRank": 14,
+      "flagUrl": "/flags/mex.svg"
+    },
+    {
+      "fifaCode": "RSA",
+      "name": "Sudáfrica",
+      "groupName": "A",
+      "flagCode": "za",
+      "fifaRank": 60,
+      "flagUrl": "/flags/rsa.svg"
+    },
+    {
+      "fifaCode": "KOR",
+      "name": "Corea del Sur",
+      "groupName": "A",
+      "flagCode": "kr",
+      "fifaRank": 25,
+      "flagUrl": "/flags/kor.svg"
+    },
+    {
+      "fifaCode": "CZE",
+      "name": "Chequia",
+      "groupName": "A",
+      "flagCode": "cz",
+      "fifaRank": 40,
+      "flagUrl": "/flags/cze.svg"
+    },
+    {
+      "fifaCode": "CAN",
+      "name": "Canadá",
+      "groupName": "B",
+      "flagCode": "ca",
+      "fifaRank": 30,
+      "flagUrl": "/flags/can.svg"
+    },
+    {
+      "fifaCode": "SUI",
+      "name": "Suiza",
+      "groupName": "B",
+      "flagCode": "ch",
+      "fifaRank": 19,
+      "flagUrl": "/flags/sui.svg"
+    },
+    {
+      "fifaCode": "QAT",
+      "name": "Catar",
+      "groupName": "B",
+      "flagCode": "qa",
+      "fifaRank": 56,
+      "flagUrl": "/flags/qat.svg"
+    },
+    {
+      "fifaCode": "BIH",
+      "name": "Bosnia y Herzegovina",
+      "groupName": "B",
+      "flagCode": "ba",
+      "fifaRank": 64,
+      "flagUrl": "/flags/bih.svg"
+    },
+    {
+      "fifaCode": "BRA",
+      "name": "Brasil",
+      "groupName": "C",
+      "flagCode": "br",
+      "fifaRank": 6,
+      "flagUrl": "/flags/bra.svg"
+    },
+    {
+      "fifaCode": "MAR",
+      "name": "Marruecos",
+      "groupName": "C",
+      "flagCode": "ma",
+      "fifaRank": 7,
+      "flagUrl": "/flags/mar.svg"
+    },
+    {
+      "fifaCode": "HAI",
+      "name": "Haití",
+      "groupName": "C",
+      "flagCode": "ht",
+      "fifaRank": 83,
+      "flagUrl": "/flags/hai.svg"
+    },
+    {
+      "fifaCode": "SCO",
+      "name": "Escocia",
+      "groupName": "C",
+      "flagCode": "gb-sct",
+      "fifaRank": 42,
+      "flagUrl": "/flags/sco.svg"
+    },
+    {
+      "fifaCode": "USA",
+      "name": "Estados Unidos",
+      "groupName": "D",
+      "flagCode": "us",
+      "fifaRank": 17,
+      "flagUrl": "/flags/usa.svg"
+    },
+    {
+      "fifaCode": "PAR",
+      "name": "Paraguay",
+      "groupName": "D",
+      "flagCode": "py",
+      "fifaRank": 41,
+      "flagUrl": "/flags/par.svg"
+    },
+    {
+      "fifaCode": "AUS",
+      "name": "Australia",
+      "groupName": "D",
+      "flagCode": "au",
+      "fifaRank": 27,
+      "flagUrl": "/flags/aus.svg"
+    },
+    {
+      "fifaCode": "TUR",
+      "name": "Turquía",
+      "groupName": "D",
+      "flagCode": "tr",
+      "fifaRank": 22,
+      "flagUrl": "/flags/tur.svg"
+    },
+    {
+      "fifaCode": "GER",
+      "name": "Alemania",
+      "groupName": "E",
+      "flagCode": "de",
+      "fifaRank": 10,
+      "flagUrl": "/flags/ger.svg"
+    },
+    {
+      "fifaCode": "CUW",
+      "name": "Curazao",
+      "groupName": "E",
+      "flagCode": "cw",
+      "fifaRank": 82,
+      "flagUrl": "/flags/cuw.svg"
+    },
+    {
+      "fifaCode": "CIV",
+      "name": "Costa de Marfil",
+      "groupName": "E",
+      "flagCode": "ci",
+      "fifaRank": 33,
+      "flagUrl": "/flags/civ.svg"
+    },
+    {
+      "fifaCode": "ECU",
+      "name": "Ecuador",
+      "groupName": "E",
+      "flagCode": "ec",
+      "fifaRank": 23,
+      "flagUrl": "/flags/ecu.svg"
+    },
+    {
+      "fifaCode": "NED",
+      "name": "Países Bajos",
+      "groupName": "F",
+      "flagCode": "nl",
+      "fifaRank": 8,
+      "flagUrl": "/flags/ned.svg"
+    },
+    {
+      "fifaCode": "JPN",
+      "name": "Japón",
+      "groupName": "F",
+      "flagCode": "jp",
+      "fifaRank": 18,
+      "flagUrl": "/flags/jpn.svg"
+    },
+    {
+      "fifaCode": "SWE",
+      "name": "Suecia",
+      "groupName": "F",
+      "flagCode": "se",
+      "fifaRank": 38,
+      "flagUrl": "/flags/swe.svg"
+    },
+    {
+      "fifaCode": "TUN",
+      "name": "Túnez",
+      "groupName": "F",
+      "flagCode": "tn",
+      "fifaRank": 45,
+      "flagUrl": "/flags/tun.svg"
+    },
+    {
+      "fifaCode": "BEL",
+      "name": "Bélgica",
+      "groupName": "G",
+      "flagCode": "be",
+      "fifaRank": 9,
+      "flagUrl": "/flags/bel.svg"
+    },
+    {
+      "fifaCode": "EGY",
+      "name": "Egipto",
+      "groupName": "G",
+      "flagCode": "eg",
+      "fifaRank": 29,
+      "flagUrl": "/flags/egy.svg"
+    },
+    {
+      "fifaCode": "IRN",
+      "name": "Irán",
+      "groupName": "G",
+      "flagCode": "ir",
+      "fifaRank": 20,
+      "flagUrl": "/flags/irn.svg"
+    },
+    {
+      "fifaCode": "NZL",
+      "name": "Nueva Zelanda",
+      "groupName": "G",
+      "flagCode": "nz",
+      "fifaRank": 85,
+      "flagUrl": "/flags/nzl.svg"
+    },
+    {
+      "fifaCode": "ESP",
+      "name": "España",
+      "groupName": "H",
+      "flagCode": "es",
+      "fifaRank": 2,
+      "flagUrl": "/flags/esp.svg"
+    },
+    {
+      "fifaCode": "CPV",
+      "name": "Cabo Verde",
+      "groupName": "H",
+      "flagCode": "cv",
+      "fifaRank": 67,
+      "flagUrl": "/flags/cpv.svg"
+    },
+    {
+      "fifaCode": "KSA",
+      "name": "Arabia Saudita",
+      "groupName": "H",
+      "flagCode": "sa",
+      "fifaRank": 61,
+      "flagUrl": "/flags/ksa.svg"
+    },
+    {
+      "fifaCode": "URU",
+      "name": "Uruguay",
+      "groupName": "H",
+      "flagCode": "uy",
+      "fifaRank": 16,
+      "flagUrl": "/flags/uru.svg"
+    },
+    {
+      "fifaCode": "FRA",
+      "name": "Francia",
+      "groupName": "I",
+      "flagCode": "fr",
+      "fifaRank": 3,
+      "flagUrl": "/flags/fra.svg"
+    },
+    {
+      "fifaCode": "SEN",
+      "name": "Senegal",
+      "groupName": "I",
+      "flagCode": "sn",
+      "fifaRank": 15,
+      "flagUrl": "/flags/sen.svg"
+    },
+    {
+      "fifaCode": "IRQ",
+      "name": "Irak",
+      "groupName": "I",
+      "flagCode": "iq",
+      "fifaRank": 57,
+      "flagUrl": "/flags/irq.svg"
+    },
+    {
+      "fifaCode": "NOR",
+      "name": "Noruega",
+      "groupName": "I",
+      "flagCode": "no",
+      "fifaRank": 31,
+      "flagUrl": "/flags/nor.svg"
+    },
+    {
+      "fifaCode": "ARG",
+      "name": "Argentina",
+      "groupName": "J",
+      "flagCode": "ar",
+      "fifaRank": 1,
+      "flagUrl": "/flags/arg.svg"
+    },
+    {
+      "fifaCode": "ALG",
+      "name": "Argelia",
+      "groupName": "J",
+      "flagCode": "dz",
+      "fifaRank": 28,
+      "flagUrl": "/flags/alg.svg"
+    },
+    {
+      "fifaCode": "AUT",
+      "name": "Austria",
+      "groupName": "J",
+      "flagCode": "at",
+      "fifaRank": 24,
+      "flagUrl": "/flags/aut.svg"
+    },
+    {
+      "fifaCode": "JOR",
+      "name": "Jordania",
+      "groupName": "J",
+      "flagCode": "jo",
+      "fifaRank": 63,
+      "flagUrl": "/flags/jor.svg"
+    },
+    {
+      "fifaCode": "POR",
+      "name": "Portugal",
+      "groupName": "K",
+      "flagCode": "pt",
+      "fifaRank": 5,
+      "flagUrl": "/flags/por.svg"
+    },
+    {
+      "fifaCode": "COD",
+      "name": "RD del Congo",
+      "groupName": "K",
+      "flagCode": "cd",
+      "fifaRank": 46,
+      "flagUrl": "/flags/cod.svg"
+    },
+    {
+      "fifaCode": "UZB",
+      "name": "Uzbekistán",
+      "groupName": "K",
+      "flagCode": "uz",
+      "fifaRank": 50,
+      "flagUrl": "/flags/uzb.svg"
+    },
+    {
+      "fifaCode": "COL",
+      "name": "Colombia",
+      "groupName": "K",
+      "flagCode": "co",
+      "fifaRank": 13,
+      "flagUrl": "/flags/col.svg"
+    },
+    {
+      "fifaCode": "ENG",
+      "name": "Inglaterra",
+      "groupName": "L",
+      "flagCode": "gb-eng",
+      "fifaRank": 4,
+      "flagUrl": "/flags/eng.svg"
+    },
+    {
+      "fifaCode": "CRO",
+      "name": "Croacia",
+      "groupName": "L",
+      "flagCode": "hr",
+      "fifaRank": 11,
+      "flagUrl": "/flags/cro.svg"
+    },
+    {
+      "fifaCode": "GHA",
+      "name": "Ghana",
+      "groupName": "L",
+      "flagCode": "gh",
+      "fifaRank": 73,
+      "flagUrl": "/flags/gha.svg"
+    },
+    {
+      "fifaCode": "PAN",
+      "name": "Panamá",
+      "groupName": "L",
+      "flagCode": "pa",
+      "fifaRank": 34,
+      "flagUrl": "/flags/pan.svg"
+    }
+  ],
+  "matches": [
+    {
+      "matchNumber": 1,
+      "phase": "group_stage",
+      "groupName": "A",
+      "homeTeamCode": "MEX",
+      "awayTeamCode": "RSA",
+      "matchDate": "2026-06-11T19:00:00.000Z",
+      "status": "finished",
+      "homeScore": 2,
+      "awayScore": 0
+    },
+    {
+      "matchNumber": 2,
+      "phase": "group_stage",
+      "groupName": "A",
+      "homeTeamCode": "KOR",
+      "awayTeamCode": "CZE",
+      "matchDate": "2026-06-12T02:00:00.000Z",
+      "status": "finished",
+      "homeScore": 2,
+      "awayScore": 1
+    },
+    {
+      "matchNumber": 3,
+      "phase": "group_stage",
+      "groupName": "B",
+      "homeTeamCode": "CAN",
+      "awayTeamCode": "BIH",
+      "matchDate": "2026-06-12T19:00:00.000Z",
+      "status": "finished",
+      "homeScore": 1,
+      "awayScore": 1
+    },
+    {
+      "matchNumber": 4,
+      "phase": "group_stage",
+      "groupName": "D",
+      "homeTeamCode": "USA",
+      "awayTeamCode": "PAR",
+      "matchDate": "2026-06-13T01:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 5,
+      "phase": "group_stage",
+      "groupName": "C",
+      "homeTeamCode": "HAI",
+      "awayTeamCode": "SCO",
+      "matchDate": "2026-06-14T01:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 6,
+      "phase": "group_stage",
+      "groupName": "D",
+      "homeTeamCode": "AUS",
+      "awayTeamCode": "TUR",
+      "matchDate": "2026-06-14T04:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 7,
+      "phase": "group_stage",
+      "groupName": "C",
+      "homeTeamCode": "BRA",
+      "awayTeamCode": "MAR",
+      "matchDate": "2026-06-13T22:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 8,
+      "phase": "group_stage",
+      "groupName": "B",
+      "homeTeamCode": "QAT",
+      "awayTeamCode": "SUI",
+      "matchDate": "2026-06-13T19:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 9,
+      "phase": "group_stage",
+      "groupName": "E",
+      "homeTeamCode": "CIV",
+      "awayTeamCode": "ECU",
+      "matchDate": "2026-06-14T23:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 10,
+      "phase": "group_stage",
+      "groupName": "E",
+      "homeTeamCode": "GER",
+      "awayTeamCode": "CUW",
+      "matchDate": "2026-06-14T17:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 11,
+      "phase": "group_stage",
+      "groupName": "F",
+      "homeTeamCode": "NED",
+      "awayTeamCode": "JPN",
+      "matchDate": "2026-06-14T20:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 12,
+      "phase": "group_stage",
+      "groupName": "F",
+      "homeTeamCode": "SWE",
+      "awayTeamCode": "TUN",
+      "matchDate": "2026-06-15T02:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 13,
+      "phase": "group_stage",
+      "groupName": "H",
+      "homeTeamCode": "KSA",
+      "awayTeamCode": "URU",
+      "matchDate": "2026-06-15T22:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 14,
+      "phase": "group_stage",
+      "groupName": "H",
+      "homeTeamCode": "ESP",
+      "awayTeamCode": "CPV",
+      "matchDate": "2026-06-15T16:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 15,
+      "phase": "group_stage",
+      "groupName": "G",
+      "homeTeamCode": "IRN",
+      "awayTeamCode": "NZL",
+      "matchDate": "2026-06-16T01:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 16,
+      "phase": "group_stage",
+      "groupName": "G",
+      "homeTeamCode": "BEL",
+      "awayTeamCode": "EGY",
+      "matchDate": "2026-06-15T19:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 17,
+      "phase": "group_stage",
+      "groupName": "I",
+      "homeTeamCode": "FRA",
+      "awayTeamCode": "SEN",
+      "matchDate": "2026-06-16T19:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 18,
+      "phase": "group_stage",
+      "groupName": "I",
+      "homeTeamCode": "IRQ",
+      "awayTeamCode": "NOR",
+      "matchDate": "2026-06-16T22:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 19,
+      "phase": "group_stage",
+      "groupName": "J",
+      "homeTeamCode": "ARG",
+      "awayTeamCode": "ALG",
+      "matchDate": "2026-06-17T01:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 20,
+      "phase": "group_stage",
+      "groupName": "J",
+      "homeTeamCode": "AUT",
+      "awayTeamCode": "JOR",
+      "matchDate": "2026-06-17T04:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 21,
+      "phase": "group_stage",
+      "groupName": "L",
+      "homeTeamCode": "GHA",
+      "awayTeamCode": "PAN",
+      "matchDate": "2026-06-17T23:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 22,
+      "phase": "group_stage",
+      "groupName": "L",
+      "homeTeamCode": "ENG",
+      "awayTeamCode": "CRO",
+      "matchDate": "2026-06-17T20:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 23,
+      "phase": "group_stage",
+      "groupName": "K",
+      "homeTeamCode": "POR",
+      "awayTeamCode": "COD",
+      "matchDate": "2026-06-17T17:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 24,
+      "phase": "group_stage",
+      "groupName": "K",
+      "homeTeamCode": "UZB",
+      "awayTeamCode": "COL",
+      "matchDate": "2026-06-18T02:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 25,
+      "phase": "group_stage",
+      "groupName": "A",
+      "homeTeamCode": "CZE",
+      "awayTeamCode": "RSA",
+      "matchDate": "2026-06-18T16:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 26,
+      "phase": "group_stage",
+      "groupName": "B",
+      "homeTeamCode": "SUI",
+      "awayTeamCode": "BIH",
+      "matchDate": "2026-06-18T19:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 27,
+      "phase": "group_stage",
+      "groupName": "B",
+      "homeTeamCode": "CAN",
+      "awayTeamCode": "QAT",
+      "matchDate": "2026-06-18T22:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 28,
+      "phase": "group_stage",
+      "groupName": "A",
+      "homeTeamCode": "MEX",
+      "awayTeamCode": "KOR",
+      "matchDate": "2026-06-19T01:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 29,
+      "phase": "group_stage",
+      "groupName": "C",
+      "homeTeamCode": "BRA",
+      "awayTeamCode": "HAI",
+      "matchDate": "2026-06-20T00:30:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 30,
+      "phase": "group_stage",
+      "groupName": "C",
+      "homeTeamCode": "SCO",
+      "awayTeamCode": "MAR",
+      "matchDate": "2026-06-19T22:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 31,
+      "phase": "group_stage",
+      "groupName": "D",
+      "homeTeamCode": "TUR",
+      "awayTeamCode": "PAR",
+      "matchDate": "2026-06-20T03:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 32,
+      "phase": "group_stage",
+      "groupName": "D",
+      "homeTeamCode": "USA",
+      "awayTeamCode": "AUS",
+      "matchDate": "2026-06-19T19:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 33,
+      "phase": "group_stage",
+      "groupName": "E",
+      "homeTeamCode": "GER",
+      "awayTeamCode": "CIV",
+      "matchDate": "2026-06-20T20:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 34,
+      "phase": "group_stage",
+      "groupName": "E",
+      "homeTeamCode": "ECU",
+      "awayTeamCode": "CUW",
+      "matchDate": "2026-06-21T00:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 35,
+      "phase": "group_stage",
+      "groupName": "F",
+      "homeTeamCode": "NED",
+      "awayTeamCode": "SWE",
+      "matchDate": "2026-06-20T17:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 36,
+      "phase": "group_stage",
+      "groupName": "F",
+      "homeTeamCode": "TUN",
+      "awayTeamCode": "JPN",
+      "matchDate": "2026-06-21T04:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 37,
+      "phase": "group_stage",
+      "groupName": "H",
+      "homeTeamCode": "URU",
+      "awayTeamCode": "CPV",
+      "matchDate": "2026-06-21T22:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 38,
+      "phase": "group_stage",
+      "groupName": "H",
+      "homeTeamCode": "ESP",
+      "awayTeamCode": "KSA",
+      "matchDate": "2026-06-21T16:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 39,
+      "phase": "group_stage",
+      "groupName": "G",
+      "homeTeamCode": "BEL",
+      "awayTeamCode": "IRN",
+      "matchDate": "2026-06-21T19:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 40,
+      "phase": "group_stage",
+      "groupName": "G",
+      "homeTeamCode": "NZL",
+      "awayTeamCode": "EGY",
+      "matchDate": "2026-06-22T01:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 41,
+      "phase": "group_stage",
+      "groupName": "I",
+      "homeTeamCode": "NOR",
+      "awayTeamCode": "SEN",
+      "matchDate": "2026-06-23T00:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 42,
+      "phase": "group_stage",
+      "groupName": "I",
+      "homeTeamCode": "FRA",
+      "awayTeamCode": "IRQ",
+      "matchDate": "2026-06-22T21:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 43,
+      "phase": "group_stage",
+      "groupName": "J",
+      "homeTeamCode": "ARG",
+      "awayTeamCode": "AUT",
+      "matchDate": "2026-06-22T17:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 44,
+      "phase": "group_stage",
+      "groupName": "J",
+      "homeTeamCode": "JOR",
+      "awayTeamCode": "ALG",
+      "matchDate": "2026-06-23T03:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 45,
+      "phase": "group_stage",
+      "groupName": "L",
+      "homeTeamCode": "ENG",
+      "awayTeamCode": "GHA",
+      "matchDate": "2026-06-23T20:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 46,
+      "phase": "group_stage",
+      "groupName": "L",
+      "homeTeamCode": "PAN",
+      "awayTeamCode": "CRO",
+      "matchDate": "2026-06-23T23:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 47,
+      "phase": "group_stage",
+      "groupName": "K",
+      "homeTeamCode": "POR",
+      "awayTeamCode": "UZB",
+      "matchDate": "2026-06-23T17:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 48,
+      "phase": "group_stage",
+      "groupName": "K",
+      "homeTeamCode": "COL",
+      "awayTeamCode": "COD",
+      "matchDate": "2026-06-24T02:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 49,
+      "phase": "group_stage",
+      "groupName": "C",
+      "homeTeamCode": "SCO",
+      "awayTeamCode": "BRA",
+      "matchDate": "2026-06-24T22:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 50,
+      "phase": "group_stage",
+      "groupName": "C",
+      "homeTeamCode": "MAR",
+      "awayTeamCode": "HAI",
+      "matchDate": "2026-06-24T22:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 51,
+      "phase": "group_stage",
+      "groupName": "B",
+      "homeTeamCode": "SUI",
+      "awayTeamCode": "CAN",
+      "matchDate": "2026-06-24T19:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 52,
+      "phase": "group_stage",
+      "groupName": "B",
+      "homeTeamCode": "BIH",
+      "awayTeamCode": "QAT",
+      "matchDate": "2026-06-24T19:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 53,
+      "phase": "group_stage",
+      "groupName": "A",
+      "homeTeamCode": "CZE",
+      "awayTeamCode": "MEX",
+      "matchDate": "2026-06-25T01:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 54,
+      "phase": "group_stage",
+      "groupName": "A",
+      "homeTeamCode": "RSA",
+      "awayTeamCode": "KOR",
+      "matchDate": "2026-06-25T01:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 55,
+      "phase": "group_stage",
+      "groupName": "E",
+      "homeTeamCode": "CUW",
+      "awayTeamCode": "CIV",
+      "matchDate": "2026-06-25T20:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 56,
+      "phase": "group_stage",
+      "groupName": "E",
+      "homeTeamCode": "ECU",
+      "awayTeamCode": "GER",
+      "matchDate": "2026-06-25T20:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 57,
+      "phase": "group_stage",
+      "groupName": "F",
+      "homeTeamCode": "JPN",
+      "awayTeamCode": "SWE",
+      "matchDate": "2026-06-25T23:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 58,
+      "phase": "group_stage",
+      "groupName": "F",
+      "homeTeamCode": "TUN",
+      "awayTeamCode": "NED",
+      "matchDate": "2026-06-25T23:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 59,
+      "phase": "group_stage",
+      "groupName": "D",
+      "homeTeamCode": "TUR",
+      "awayTeamCode": "USA",
+      "matchDate": "2026-06-26T02:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 60,
+      "phase": "group_stage",
+      "groupName": "D",
+      "homeTeamCode": "PAR",
+      "awayTeamCode": "AUS",
+      "matchDate": "2026-06-26T02:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 61,
+      "phase": "group_stage",
+      "groupName": "I",
+      "homeTeamCode": "NOR",
+      "awayTeamCode": "FRA",
+      "matchDate": "2026-06-26T19:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 62,
+      "phase": "group_stage",
+      "groupName": "I",
+      "homeTeamCode": "SEN",
+      "awayTeamCode": "IRQ",
+      "matchDate": "2026-06-26T19:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 63,
+      "phase": "group_stage",
+      "groupName": "G",
+      "homeTeamCode": "EGY",
+      "awayTeamCode": "IRN",
+      "matchDate": "2026-06-27T03:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 64,
+      "phase": "group_stage",
+      "groupName": "G",
+      "homeTeamCode": "NZL",
+      "awayTeamCode": "BEL",
+      "matchDate": "2026-06-27T03:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 65,
+      "phase": "group_stage",
+      "groupName": "H",
+      "homeTeamCode": "CPV",
+      "awayTeamCode": "KSA",
+      "matchDate": "2026-06-27T00:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 66,
+      "phase": "group_stage",
+      "groupName": "H",
+      "homeTeamCode": "URU",
+      "awayTeamCode": "ESP",
+      "matchDate": "2026-06-27T00:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 67,
+      "phase": "group_stage",
+      "groupName": "L",
+      "homeTeamCode": "PAN",
+      "awayTeamCode": "ENG",
+      "matchDate": "2026-06-27T21:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 68,
+      "phase": "group_stage",
+      "groupName": "L",
+      "homeTeamCode": "CRO",
+      "awayTeamCode": "GHA",
+      "matchDate": "2026-06-27T21:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 69,
+      "phase": "group_stage",
+      "groupName": "J",
+      "homeTeamCode": "ALG",
+      "awayTeamCode": "AUT",
+      "matchDate": "2026-06-28T02:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 70,
+      "phase": "group_stage",
+      "groupName": "J",
+      "homeTeamCode": "JOR",
+      "awayTeamCode": "ARG",
+      "matchDate": "2026-06-28T02:00:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 71,
+      "phase": "group_stage",
+      "groupName": "K",
+      "homeTeamCode": "COL",
+      "awayTeamCode": "POR",
+      "matchDate": "2026-06-27T23:30:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "matchNumber": 72,
+      "phase": "group_stage",
+      "groupName": "K",
+      "homeTeamCode": "COD",
+      "awayTeamCode": "UZB",
+      "matchDate": "2026-06-27T23:30:00.000Z",
+      "status": "scheduled",
+      "homeScore": null,
+      "awayScore": null
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { EmptyState } from '../../components/ui/EmptyState'
+import { hasMatchStarted } from './match-formatters'
 import { MatchCard } from './MatchCard'
 import { MatchCardSkeleton } from './MatchCardSkeleton'
 import { useMatches } from './useMatches'
@@ -7,10 +8,7 @@ import { useMatches } from './useMatches'
 export function UpcomingMatches() {
   const { matches, isLoading, errorMessage } = useMatches()
   const upcomingMatches = matches
-    .filter(
-      (match) =>
-        !['finished', 'completed'].includes(match.status.toLowerCase()),
-    )
+    .filter((match) => !hasMatchStarted(match.matchDate))
     .slice(0, 2)
 
   if (isLoading) {

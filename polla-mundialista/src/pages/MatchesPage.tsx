@@ -3,6 +3,7 @@ import { EmptyState } from '../components/ui/EmptyState'
 import { PageHeader } from '../components/ui/PageHeader'
 import {
   formatPhase,
+  getMatchDateKey,
   getDateGroupLabel,
 } from '../features/matches/match-formatters'
 import { MatchCard } from '../features/matches/MatchCard'
@@ -43,7 +44,7 @@ export function MatchesPage() {
     const groupsByDate = new Map<string, typeof filteredMatches>()
 
     for (const match of filteredMatches) {
-      const dateKey = match.matchDate.slice(0, 10)
+      const dateKey = getMatchDateKey(match.matchDate)
       groupsByDate.set(dateKey, [...(groupsByDate.get(dateKey) ?? []), match])
     }
 

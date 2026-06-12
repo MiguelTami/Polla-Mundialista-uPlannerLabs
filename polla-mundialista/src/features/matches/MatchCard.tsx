@@ -3,6 +3,7 @@ import {
   formatMatchStatus,
   formatPhase,
   getStatusStyles,
+  hasMatchStarted,
   isFinishedStatus,
 } from './match-formatters'
 import type { Match } from './matches.types'
@@ -17,12 +18,16 @@ export function MatchCard({ match }: MatchCardProps) {
     isFinishedStatus(match.status) &&
     match.homeScore !== null &&
     match.awayScore !== null
+  const hasStarted = hasMatchStarted(match.matchDate)
+  const displayedStatus =
+    hasStarted && !hasResult ? 'in_progress' : match.status
 
   return (
     <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div>
           <p className="text-sm font-bold text-slate-900">
+            {match.matchNumber ? `Partido ${match.matchNumber} · ` : ''}
             {formatPhase(match.phase)}
             {match.groupName ? ` · Grupo ${match.groupName}` : ''}
           </p>
@@ -31,9 +36,9 @@ export function MatchCard({ match }: MatchCardProps) {
           </p>
         </div>
         <span
-          className={`rounded-full px-3 py-1 text-xs font-bold ${getStatusStyles(match.status)}`}
+          className={`rounded-full px-3 py-1 text-xs font-bold ${getStatusStyles(displayedStatus)}`}
         >
-          {formatMatchStatus(match.status)}
+          {formatMatchStatus(displayedStatus)}
         </span>
       </header>
 
@@ -53,9 +58,15 @@ export function MatchCard({ match }: MatchCardProps) {
         <TeamDisplay team={match.awayTeam} />
       </div>
 
-      {!hasResult && !isFinishedStatus(match.status) ? (
-        <p className="border-t border-slate-100 pt-4 text-center text-xs font-semibold text-brand-700">
-          Disponible para predecir en la siguiente fase
+      {!hasResult ? (
+        <p
+          className={`border-t border-slate-100 pt-4 text-center text-xs font-semibold ${
+            hasStarted ? 'text-slate-500' : 'text-brand-700'
+          }`}
+        >
+          {hasStarted
+            ? 'Predicciones cerradas: el partido ya comenzó'
+            : 'Disponible para predecir en la siguiente fase'}
         </p>
       ) : null}
     </article>

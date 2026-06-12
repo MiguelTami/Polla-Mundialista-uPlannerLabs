@@ -59,6 +59,31 @@ Para que los usuarios autenticados puedan consultar equipos y partidos, ejecuta:
 supabase/migrations/202606120003_allow_match_calendar_read.sql
 ```
 
+## Calendario del Mundial
+
+El catálogo de la fase de grupos se genera con:
+
+```bash
+node scripts/generate-world-cup-seed.mjs
+```
+
+Este comando:
+
+- descarga y valida los 48 equipos y 72 partidos;
+- actualiza los resultados ya publicados;
+- descarga las banderas SVG en `public/flags`;
+- genera `src/data/world-cup-2026.json`;
+- regenera la migración `202606120004_seed_world_cup_group_stage.sql`.
+
+Después de regenerar los datos, aplica las migraciones pendientes:
+
+```bash
+npx supabase@latest db push
+```
+
+Las fechas se almacenan como `timestamptz` en UTC y la aplicación las presenta
+en la zona horaria `America/Bogota`.
+
 ## Scripts
 
 - `npm run dev`: inicia Vite en modo desarrollo.

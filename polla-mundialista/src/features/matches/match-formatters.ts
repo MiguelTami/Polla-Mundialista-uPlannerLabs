@@ -1,5 +1,7 @@
 import type { MatchStatus } from './matches.types'
 
+const colombiaTimeZone = 'America/Bogota'
+
 const phaseLabels: Record<string, string> = {
   group: 'Fase de grupos',
   group_stage: 'Fase de grupos',
@@ -44,6 +46,7 @@ export function getStatusStyles(status: MatchStatus) {
 
 export function formatMatchDate(date: string) {
   return new Intl.DateTimeFormat('es-CO', {
+    timeZone: colombiaTimeZone,
     weekday: 'short',
     day: 'numeric',
     month: 'short',
@@ -54,6 +57,7 @@ export function formatMatchDate(date: string) {
 
 export function getDateGroupLabel(date: string) {
   return new Intl.DateTimeFormat('es-CO', {
+    timeZone: colombiaTimeZone,
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -62,4 +66,22 @@ export function getDateGroupLabel(date: string) {
 
 export function isFinishedStatus(status: MatchStatus) {
   return ['finished', 'completed'].includes(status.toLowerCase())
+}
+
+export function hasMatchStarted(matchDate: string) {
+  return new Date(matchDate).getTime() <= Date.now()
+}
+
+export function getMatchDateKey(date: string) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: colombiaTimeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(new Date(date))
+  const values = Object.fromEntries(
+    parts.map((part) => [part.type, part.value]),
+  )
+
+  return `${values.year}-${values.month}-${values.day}`
 }

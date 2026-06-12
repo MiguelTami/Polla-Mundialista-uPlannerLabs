@@ -9,6 +9,7 @@ export type MatchStatus = 'scheduled' | 'live' | 'finished' | string
 
 export type Match = {
   id: string | number
+  matchNumber: number | null
   phase: string
   groupName: string | null
   matchDate: string

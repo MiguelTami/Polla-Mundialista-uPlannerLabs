@@ -10,6 +10,7 @@ type TeamRow = {
 
 type MatchRow = {
   id: string | number
+  match_number: number | null
   phase: string
   group_name: string | null
   home_team_id: string | number | null
@@ -38,7 +39,7 @@ export async function getMatches(): Promise<Match[]> {
     supabase
       .from('matches')
       .select(
-        'id, phase, group_name, home_team_id, away_team_id, match_date, home_score, away_score, status',
+        'id, match_number, phase, group_name, home_team_id, away_team_id, match_date, home_score, away_score, status',
       )
       .order('match_date'),
   ])
@@ -56,6 +57,7 @@ export async function getMatches(): Promise<Match[]> {
 
   return (matchesResult.data as MatchRow[]).map((match) => ({
     id: match.id,
+    matchNumber: match.match_number,
     phase: match.phase,
     groupName: match.group_name,
     matchDate: match.match_date,

@@ -33,8 +33,13 @@ export function BracketPage() {
       buildBracket(
         simulatedGroups,
         knockoutState.predictionsByMatchNumber,
+        matchesState.matches,
       ),
-    [simulatedGroups, knockoutState.predictionsByMatchNumber],
+    [
+      simulatedGroups,
+      knockoutState.predictionsByMatchNumber,
+      matchesState.matches,
+    ],
   )
   const completedGroups = simulatedGroups.filter(
     (group) => group.isComplete,

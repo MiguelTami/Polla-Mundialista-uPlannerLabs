@@ -17,6 +17,7 @@ export type Match = {
   matchDate: string
   homeScore: number | null
   awayScore: number | null
+  winnerTeamId: string | number | null
   status: MatchStatus
   homeTeam: Team | null
   awayTeam: Team | null

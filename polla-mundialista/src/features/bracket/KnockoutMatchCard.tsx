@@ -24,6 +24,8 @@ export function KnockoutMatchCard({ match, onSaved }: KnockoutMatchCardProps) {
   const [isSaving, setIsSaving] = useState(false)
   const [message, setMessage] = useState('')
   const canPredict =
+    !match.isLocked &&
+    !match.isFinished &&
     match.home.isExact &&
     match.away.isExact &&
     match.home.team !== null &&
@@ -89,12 +91,33 @@ export function KnockoutMatchCard({ match, onSaved }: KnockoutMatchCardProps) {
         <span className="text-[11px] font-black uppercase tracking-wider text-slate-400">
           Partido {match.matchNumber}
         </span>
-        {match.prediction ? (
+        {match.isFinished ? (
+          <span className="rounded-full bg-emerald-100 px-2 py-1 text-[10px] font-black text-emerald-800">
+            Finalizado
+          </span>
+        ) : match.isLocked ? (
+          <span className="rounded-full bg-slate-200 px-2 py-1 text-[10px] font-black text-slate-700">
+            Cerrado
+          </span>
+        ) : match.prediction ? (
           <span className="rounded-full bg-brand-100 px-2 py-1 text-[10px] font-black text-brand-800">
             Guardado
           </span>
         ) : null}
       </div>
+
+      {match.isFinished ? (
+        <div className="mb-3 rounded-xl bg-slate-950 px-3 py-2 text-center text-sm font-black text-white">
+          Resultado real: {match.actualHomeScore} - {match.actualAwayScore}
+          {match.prediction ? (
+            <span className="ml-2 text-brand-200">
+              {match.prediction.pointsAwarded} pts
+            </span>
+          ) : (
+            <span className="ml-2 text-slate-300">Sin predicción · 0 pts</span>
+          )}
+        </div>
+      ) : null}
 
       <div className="space-y-2">
         <div className="grid grid-cols-[1fr_3rem] items-center gap-2">
@@ -169,11 +192,13 @@ export function KnockoutMatchCard({ match, onSaved }: KnockoutMatchCardProps) {
         >
           {isSaving ? 'Guardando...' : 'Guardar y avanzar'}
         </button>
-      ) : (
+      ) : !match.isFinished ? (
         <p className="mt-3 text-center text-[11px] leading-4 text-slate-500">
-          Se habilitará cuando ambos equipos estén definidos.
+          {match.isLocked
+            ? 'El partido ya comenzó. No se admiten predicciones nuevas.'
+            : 'Se habilitará cuando ambos equipos estén definidos.'}
         </p>
-      )}
+      ) : null}
 
       {message ? (
         <p className="mt-2 text-center text-[11px] font-semibold text-slate-600">

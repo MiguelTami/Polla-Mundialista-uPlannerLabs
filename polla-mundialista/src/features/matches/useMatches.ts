@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { supabase } from '../../lib/supabase'
 import { getMatches } from './matches.service'
 import type { Match } from './matches.types'
 
@@ -46,6 +47,29 @@ export function useMatches() {
 
     return () => {
       isMounted = false
+    }
+  }, [])
+
+  useEffect(() => {
+    const channel = supabase
+      .channel('matches-live-results')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'matches',
+        },
+        () => {
+          getMatches()
+            .then(setMatches)
+            .catch(() => undefined)
+        },
+      )
+      .subscribe()
+
+    return () => {
+      void supabase.removeChannel(channel)
     }
   }, [])
 

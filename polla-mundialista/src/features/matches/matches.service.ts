@@ -20,6 +20,7 @@ type MatchRow = {
   match_date: string
   home_score: number | null
   away_score: number | null
+  winner_team_id: string | number | null
   status: string
 }
 
@@ -43,7 +44,7 @@ export async function getMatches(): Promise<Match[]> {
     supabase
       .from('matches')
       .select(
-        'id, match_number, phase, group_name, home_team_id, away_team_id, match_date, home_score, away_score, status',
+        'id, match_number, phase, group_name, home_team_id, away_team_id, match_date, home_score, away_score, winner_team_id, status',
       )
       .order('match_date'),
   ])
@@ -67,6 +68,7 @@ export async function getMatches(): Promise<Match[]> {
     matchDate: match.match_date,
     homeScore: match.home_score,
     awayScore: match.away_score,
+    winnerTeamId: match.winner_team_id,
     status: match.status,
     homeTeam: match.home_team_id
       ? teamsById.get(String(match.home_team_id)) ?? null

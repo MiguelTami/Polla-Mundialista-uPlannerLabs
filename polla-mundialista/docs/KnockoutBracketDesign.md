@@ -65,6 +65,17 @@ Si una predicción futura de grupos cambia, el cliente:
 
 El cuadro queda bloqueado al comenzar el primer partido de dieciseisavos.
 
+Cada partido se bloquea individualmente según su fecha oficial. Cuando un
+resultado real finaliza, el ganador real sustituye la rama simulada y avanza al
+siguiente cruce. Un usuario sin predicción previa conserva cero puntos.
+
+## Sincronización
+
+GitHub Actions ejecuta `scripts/sync-world-cup-results.mjs` cada 15 minutos. El
+script actualiza fechas, participantes, estados y marcadores mediante un RPC
+reservado para `service_role`. Los cambios recalculan puntos y llegan a la
+aplicación mediante Supabase Realtime.
+
 ## Campeón y subcampeón
 
 - Campeón: ganador predicho de la final.

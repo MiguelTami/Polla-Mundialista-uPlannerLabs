@@ -49,4 +49,10 @@ export type BracketMatch = {
   home: BracketEntrant
   away: BracketEntrant
   prediction: KnockoutPrediction | null
+  matchDate: string | null
+  actualHomeScore: number | null
+  actualAwayScore: number | null
+  actualWinnerId: number | null
+  isFinished: boolean
+  isLocked: boolean
 }

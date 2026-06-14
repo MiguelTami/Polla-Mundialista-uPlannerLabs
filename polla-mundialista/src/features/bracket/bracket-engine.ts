@@ -162,6 +162,7 @@ function validPrediction(
 export function buildBracket(
   simulatedGroups: SimulatedGroup[],
   predictionsByMatch: Map<number, KnockoutPrediction>,
+  officialMatches: Match[],
 ): BracketMatch[] {
   const groupsByName = new Map(
     simulatedGroups.map((group) => [group.groupName, group]),
@@ -174,6 +175,11 @@ export function buildBracket(
   const qualifiedThirds = allGroupsComplete ? rankedThirds.slice(0, 8) : []
   const qualifiedKey = qualifiedThirds.map((item) => item.group).sort().join('')
   const thirdMapping = thirdPlaceMatrix[qualifiedKey]
+  const officialByNumber = new Map(
+    officialMatches.flatMap((match) =>
+      match.matchNumber ? [[match.matchNumber, match] as const] : [],
+    ),
+  )
 
   function resolveSource(source: RoundOf32Source, matchNumber: number) {
     if ('group' in source) {
@@ -211,20 +217,63 @@ export function buildBracket(
     )
   }
 
+  function applyOfficialState(
+    matchNumber: number,
+    home: BracketEntrant,
+    away: BracketEntrant,
+  ) {
+    const official = officialByNumber.get(matchNumber)
+    const isLocked = official
+      ? new Date(official.matchDate).getTime() <= Date.now()
+      : false
+    const isFinished =
+      official?.status === 'finished' &&
+      official.homeScore !== null &&
+      official.awayScore !== null
+    const useOfficialTeams =
+      isLocked && official?.homeTeam !== null && official?.awayTeam !== null
+    const resolvedHome =
+      useOfficialTeams && official?.homeTeam
+        ? entrant(official.homeTeam, official.homeTeam.name, true)
+        : home
+    const resolvedAway =
+      useOfficialTeams && official?.awayTeam
+        ? entrant(official.awayTeam, official.awayTeam.name, true)
+        : away
+
+    return {
+      home: resolvedHome,
+      away: resolvedAway,
+      matchDate: official?.matchDate ?? null,
+      actualHomeScore: isFinished ? official.homeScore : null,
+      actualAwayScore: isFinished ? official.awayScore : null,
+      actualWinnerId:
+        isFinished && official.winnerTeamId
+          ? Number(official.winnerTeamId)
+          : null,
+      isFinished,
+      isLocked,
+    }
+  }
+
   const bracketMatches: BracketMatch[] = roundOf32.map(
     ([matchNumber, homeSource, awaySource]) => {
-      const home = resolveSource(homeSource, matchNumber)
-      const away = resolveSource(awaySource, matchNumber)
+      const officialState = applyOfficialState(
+        matchNumber,
+        resolveSource(homeSource, matchNumber),
+        resolveSource(awaySource, matchNumber),
+      )
       return {
         matchNumber,
         round: 'round_of_32',
-        home,
-        away,
-        prediction: validPrediction(
-          predictionsByMatch.get(matchNumber),
-          home,
-          away,
-        ),
+        ...officialState,
+        prediction: officialState.isLocked
+          ? predictionsByMatch.get(matchNumber) ?? null
+          : validPrediction(
+              predictionsByMatch.get(matchNumber),
+              officialState.home,
+              officialState.away,
+            ),
       }
     },
   )
@@ -234,7 +283,8 @@ export function buildBracket(
 
   function winnerOf(matchNumber: number): BracketEntrant {
     const sourceMatch = matchesByNumber.get(matchNumber)
-    const winnerId = sourceMatch?.prediction?.winnerId
+    const winnerId =
+      sourceMatch?.actualWinnerId ?? sourceMatch?.prediction?.winnerId
     const team =
       winnerId && sourceMatch
         ? [sourceMatch.home.team, sourceMatch.away.team].find(
@@ -246,18 +296,22 @@ export function buildBracket(
 
   laterRounds.forEach(({ round, matches: definitions }) => {
     definitions.forEach(([matchNumber, homeMatch, awayMatch]) => {
-      const home = winnerOf(homeMatch)
-      const away = winnerOf(awayMatch)
+      const officialState = applyOfficialState(
+        matchNumber,
+        winnerOf(homeMatch),
+        winnerOf(awayMatch),
+      )
       const match: BracketMatch = {
         matchNumber,
         round,
-        home,
-        away,
-        prediction: validPrediction(
-          predictionsByMatch.get(matchNumber),
-          home,
-          away,
-        ),
+        ...officialState,
+        prediction: officialState.isLocked
+          ? predictionsByMatch.get(matchNumber) ?? null
+          : validPrediction(
+              predictionsByMatch.get(matchNumber),
+              officialState.home,
+              officialState.away,
+            ),
       }
       bracketMatches.push(match)
       matchesByNumber.set(matchNumber, match)

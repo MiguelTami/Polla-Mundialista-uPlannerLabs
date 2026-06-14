@@ -98,6 +98,18 @@ Nunca configures allí una `service_role`, secret key ni otra credencial privada
 Las operaciones privilegiadas deben ejecutarse en Supabase mediante RLS,
 funciones SQL o Edge Functions.
 
+## Sincronización automática
+
+El workflow `.github/workflows/sync-world-cup-results.yml` consulta resultados
+cada 15 minutos y actualiza Supabase mediante un RPC privado. Debes crear estos
+secretos en GitHub Actions:
+
+- `SUPABASE_URL`: URL del proyecto.
+- `SUPABASE_SERVICE_ROLE_KEY`: clave privada `service_role`.
+
+La clave `service_role` nunca debe configurarse en Vercel ni usar el prefijo
+`VITE_`. El workflow también puede ejecutarse manualmente desde GitHub Actions.
+
 ## Estructura
 
 ```text

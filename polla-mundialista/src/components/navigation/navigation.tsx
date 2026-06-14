@@ -39,6 +39,15 @@ export const navigationItems: NavigationItem[] = [
     ),
   },
   {
+    label: 'Mi cuadro',
+    to: '/cuadro',
+    icon: (
+      <svg className={iconClassName} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 4h6v5H4V4Zm10 0h6v5h-6V4ZM4 15h6v5H4v-5Zm10 0h6v5h-6v-5ZM10 6.5h4M7 9v6m10-6v6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
     label: 'Clasificación',
     to: '/clasificacion',
     icon: (

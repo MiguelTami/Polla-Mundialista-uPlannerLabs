@@ -2,11 +2,15 @@
 
 ## Principio
 
-Cada participante genera su propio cuadro después de completar las 72
-predicciones de fase de grupos. El cuadro se calcula con:
+Cada participante ve su cuadro desde la primera predicción. El cálculo combina:
 
-- resultados reales de partidos que ya finalizaron;
+- resultados reales de partidos ya finalizados;
 - predicciones del usuario para los partidos restantes.
+
+Cuando un grupo completa sus seis resultados, sus posiciones primera, segunda
+y tercera aparecen inmediatamente. Mientras no estén definidos los doce
+grupos, los cruces de mejores terceros muestran candidatos posibles. Al
+completar todos los grupos se aplica la matriz oficial de 495 combinaciones.
 
 No existe una selección independiente de campeón o subcampeón. Ambos se
 derivan de la final predicha por el participante.
@@ -18,65 +22,53 @@ Por cada grupo se calculan:
 1. puntos: 3 por victoria y 1 por empate;
 2. diferencia de gol;
 3. goles a favor;
-4. puntos en enfrentamientos directos;
-5. diferencia de gol en enfrentamientos directos;
-6. goles a favor en enfrentamientos directos;
-7. ranking FIFA de junio de 2026 como último desempate calculable.
+4. ranking FIFA como último desempate calculable.
 
 Clasifican los dos primeros de cada grupo y los ocho mejores terceros.
 
 ## Generación del cuadro
 
-Los dieciseisavos se crean usando la matriz oficial FIFA para las combinaciones
-de mejores terceros. Cada cruce pertenece al usuario y conserva:
+Los dieciseisavos usan la matriz oficial FIFA para las combinaciones de mejores
+terceros. Cada cruce conserva:
 
-- fase y posición dentro del cuadro;
-- equipo local y visitante derivados;
+- número oficial de partido;
+- equipos derivados de grupos o cruces anteriores;
 - marcador predicho;
 - clasificado predicho;
-- vínculo con los cruces anteriores;
-- estado bloqueado o editable.
+- estado editable o pendiente de equipos.
 
-## Persistencia propuesta
+## Persistencia
 
-### user_brackets
+`user_knockout_predictions` guarda:
 
-- `id`
 - `user_id`
-- `group_predictions_hash`
-- `generated_at`
-- `locked_at`
-
-### user_knockout_matches
-
-- `id`
-- `bracket_id`
-- `round`
-- `slot`
+- `match_number`
 - `home_team_id`
 - `away_team_id`
-- `source_home_slot`
-- `source_away_slot`
 - `predicted_home_score`
 - `predicted_away_score`
 - `predicted_winner_id`
 - `points_awarded`
+- `updated_at`
+
+La tabla tiene RLS y solo permite lectura al propietario. Las escrituras pasan
+por un RPC validado.
 
 ## Regeneración
 
-Si una predicción futura de grupos cambia:
+Si una predicción futura de grupos cambia, el cliente:
 
-1. se recalcula la clasificación simulada;
-2. se compara el hash de clasificados con el cuadro actual;
-3. si cambian equipos, se regenera el cuadro;
-4. se eliminan predicciones eliminatorias que dependían de cruces modificados.
+1. recalcula la clasificación simulada;
+2. reconstruye los cruces desde sus fuentes oficiales;
+3. ignora predicciones guardadas cuyos participantes ya no coincidan;
+4. oculta las rondas descendientes hasta volver a predecirlas.
 
-Una vez comience el primer partido de dieciseisavos, el cuadro queda bloqueado.
+El cuadro queda bloqueado al comenzar el primer partido de dieciseisavos.
 
 ## Campeón y subcampeón
 
 - Campeón: ganador predicho de la final.
 - Subcampeón: perdedor predicho de la final.
 
-Los puntos especiales se asignan comparando esos dos equipos derivados con el
+Los puntos especiales se asignarán comparando esos equipos derivados con el
 resultado real del torneo.

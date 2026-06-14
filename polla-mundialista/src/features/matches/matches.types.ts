@@ -3,6 +3,8 @@ export type Team = {
   name: string
   groupName: string | null
   flagUrl: string | null
+  fifaCode: string | null
+  fifaRank: number | null
 }
 
 export type MatchStatus = 'scheduled' | 'live' | 'finished' | string

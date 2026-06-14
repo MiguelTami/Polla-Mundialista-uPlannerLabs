@@ -1,0 +1,185 @@
+import { useState } from 'react'
+import { saveKnockoutPrediction } from './bracket.service'
+import type {
+  BracketMatch,
+  KnockoutPrediction,
+} from './bracket.types'
+import { BracketTeam } from './BracketTeam'
+
+type KnockoutMatchCardProps = {
+  match: BracketMatch
+  onSaved: (prediction: KnockoutPrediction) => void
+}
+
+export function KnockoutMatchCard({ match, onSaved }: KnockoutMatchCardProps) {
+  const [homeScore, setHomeScore] = useState(
+    match.prediction?.homeScore.toString() ?? '',
+  )
+  const [awayScore, setAwayScore] = useState(
+    match.prediction?.awayScore.toString() ?? '',
+  )
+  const [tieWinnerId, setTieWinnerId] = useState(
+    match.prediction?.winnerId.toString() ?? '',
+  )
+  const [isSaving, setIsSaving] = useState(false)
+  const [message, setMessage] = useState('')
+  const canPredict =
+    match.home.isExact &&
+    match.away.isExact &&
+    match.home.team !== null &&
+    match.away.team !== null
+  const numericHomeScore = Number(homeScore)
+  const numericAwayScore = Number(awayScore)
+  const isTie =
+    homeScore !== '' &&
+    awayScore !== '' &&
+    numericHomeScore === numericAwayScore
+  const winnerId =
+    !canPredict || homeScore === '' || awayScore === ''
+      ? null
+      : numericHomeScore > numericAwayScore
+        ? Number(match.home.team?.id)
+        : numericAwayScore > numericHomeScore
+          ? Number(match.away.team?.id)
+          : tieWinnerId
+            ? Number(tieWinnerId)
+            : null
+
+  async function handleSave() {
+    if (
+      !match.home.team ||
+      !match.away.team ||
+      winnerId === null ||
+      !Number.isInteger(numericHomeScore) ||
+      !Number.isInteger(numericAwayScore) ||
+      numericHomeScore < 0 ||
+      numericAwayScore < 0
+    ) {
+      setMessage('Completa el marcador y elige quién avanza si hay empate.')
+      return
+    }
+
+    setIsSaving(true)
+    setMessage('')
+    try {
+      const prediction = await saveKnockoutPrediction({
+        matchNumber: match.matchNumber,
+        homeTeamId: Number(match.home.team.id),
+        awayTeamId: Number(match.away.team.id),
+        homeScore: numericHomeScore,
+        awayScore: numericAwayScore,
+        winnerId,
+      })
+      onSaved(prediction)
+      setMessage('Predicción guardada.')
+    } catch (error) {
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : 'No pudimos guardar la predicción.',
+      )
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  return (
+    <article className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+      <div className="mb-3 flex items-center justify-between">
+        <span className="text-[11px] font-black uppercase tracking-wider text-slate-400">
+          Partido {match.matchNumber}
+        </span>
+        {match.prediction ? (
+          <span className="rounded-full bg-brand-100 px-2 py-1 text-[10px] font-black text-brand-800">
+            Guardado
+          </span>
+        ) : null}
+      </div>
+
+      <div className="space-y-2">
+        <div className="grid grid-cols-[1fr_3rem] items-center gap-2">
+          <BracketTeam
+            entrant={match.home}
+            isWinner={
+              match.prediction?.winnerId === Number(match.home.team?.id)
+            }
+          />
+          <input
+            aria-label={`Goles de ${match.home.label}`}
+            type="number"
+            min="0"
+            max="99"
+            value={homeScore}
+            disabled={!canPredict}
+            onChange={(event) => setHomeScore(event.target.value)}
+            className="h-10 rounded-lg border border-slate-200 text-center text-sm font-black disabled:bg-slate-50"
+          />
+        </div>
+        <div className="grid grid-cols-[1fr_3rem] items-center gap-2">
+          <BracketTeam
+            entrant={match.away}
+            isWinner={
+              match.prediction?.winnerId === Number(match.away.team?.id)
+            }
+          />
+          <input
+            aria-label={`Goles de ${match.away.label}`}
+            type="number"
+            min="0"
+            max="99"
+            value={awayScore}
+            disabled={!canPredict}
+            onChange={(event) => setAwayScore(event.target.value)}
+            className="h-10 rounded-lg border border-slate-200 text-center text-sm font-black disabled:bg-slate-50"
+          />
+        </div>
+      </div>
+
+      {canPredict && isTie ? (
+        <div className="mt-3">
+          <label
+            className="text-xs font-bold text-slate-600"
+            htmlFor={`winner-${match.matchNumber}`}
+          >
+            Clasifica por penales
+          </label>
+          <select
+            id={`winner-${match.matchNumber}`}
+            value={tieWinnerId}
+            onChange={(event) => setTieWinnerId(event.target.value)}
+            className="mt-1 h-10 w-full rounded-lg border border-slate-200 bg-white px-2 text-xs font-bold"
+          >
+            <option value="">Selecciona un equipo</option>
+            <option value={String(match.home.team?.id)}>
+              {match.home.team?.name}
+            </option>
+            <option value={String(match.away.team?.id)}>
+              {match.away.team?.name}
+            </option>
+          </select>
+        </div>
+      ) : null}
+
+      {canPredict ? (
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={isSaving || winnerId === null}
+          className="mt-3 w-full rounded-lg bg-brand-700 px-3 py-2 text-xs font-black text-white disabled:cursor-not-allowed disabled:opacity-45"
+        >
+          {isSaving ? 'Guardando...' : 'Guardar y avanzar'}
+        </button>
+      ) : (
+        <p className="mt-3 text-center text-[11px] leading-4 text-slate-500">
+          Se habilitará cuando ambos equipos estén definidos.
+        </p>
+      )}
+
+      {message ? (
+        <p className="mt-2 text-center text-[11px] font-semibold text-slate-600">
+          {message}
+        </p>
+      ) : null}
+    </article>
+  )
+}

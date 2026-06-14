@@ -3,6 +3,7 @@ import { ProtectedRoute } from '../features/auth/ProtectedRoute'
 import { PublicOnlyRoute } from '../features/auth/PublicOnlyRoute'
 import { AppLayout } from '../layouts/AppLayout'
 import { AuthPage } from '../pages/AuthPage'
+import { BracketPage } from '../pages/BracketPage'
 import { DashboardPage } from '../pages/DashboardPage'
 import { LeaderboardPage } from '../pages/LeaderboardPage'
 import { MatchesPage } from '../pages/MatchesPage'
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
           {
             path: 'predicciones',
             element: <PredictionsPage />,
+          },
+          {
+            path: 'cuadro',
+            element: <BracketPage />,
           },
           {
             path: 'clasificacion',

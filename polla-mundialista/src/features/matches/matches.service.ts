@@ -6,6 +6,8 @@ type TeamRow = {
   name: string
   group_name: string | null
   flag_url: string | null
+  fifa_code: string | null
+  fifa_rank: number | null
 }
 
 type MatchRow = {
@@ -27,6 +29,8 @@ function mapTeam(row: TeamRow): Team {
     name: row.name,
     groupName: row.group_name,
     flagUrl: row.flag_url,
+    fifaCode: row.fifa_code,
+    fifaRank: row.fifa_rank,
   }
 }
 
@@ -34,7 +38,7 @@ export async function getMatches(): Promise<Match[]> {
   const [teamsResult, matchesResult] = await Promise.all([
     supabase
       .from('teams')
-      .select('id, name, group_name, flag_url')
+      .select('id, name, group_name, flag_url, fifa_code, fifa_rank')
       .order('name'),
     supabase
       .from('matches')

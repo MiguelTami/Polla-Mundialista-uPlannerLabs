@@ -7,7 +7,7 @@ export type Team = {
   fifaRank: number | null
 }
 
-export type MatchStatus = 'scheduled' | 'live' | 'finished' | string
+export type MatchStatus = 'scheduled' | 'finished' | string
 
 export type Match = {
   id: string | number

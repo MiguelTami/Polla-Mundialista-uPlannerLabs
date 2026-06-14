@@ -187,9 +187,7 @@ export async function syncResults() {
         p_winner_team_code: winnerCode,
         p_status:
           match.homeScore === null || match.awayScore === null
-            ? new Date(match.matchDate) <= new Date()
-              ? 'live'
-              : 'scheduled'
+            ? 'scheduled'
             : 'finished',
       }),
     })

@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { EmptyState } from '../components/ui/EmptyState'
 import { PageHeader } from '../components/ui/PageHeader'
+import { simulateGroups } from '../features/bracket/bracket-engine'
+import { GroupStandingsSection } from '../features/groups/GroupStandingsSection'
 import {
   formatPhase,
   getMatchDateKey,
@@ -19,6 +21,7 @@ import { usePredictions } from '../features/predictions/usePredictions'
 export function MatchesPage() {
   const { matches, isLoading, errorMessage, reload } = useMatches()
   const {
+    predictions,
     predictionsByMatchId,
     isLoading: arePredictionsLoading,
     errorMessage: predictionsError,
@@ -49,6 +52,19 @@ export function MatchesPage() {
           (!filters.group || match.groupName === filters.group),
       ),
     [filters, matches],
+  )
+  const simulatedGroups = useMemo(
+    () => simulateGroups(matches, predictions),
+    [matches, predictions],
+  )
+  const visibleStandings = useMemo(
+    () =>
+      filters.group
+        ? simulatedGroups.filter(
+            (group) => group.groupName === filters.group,
+          )
+        : simulatedGroups,
+    [filters.group, simulatedGroups],
   )
   const matchesByDate = useMemo(() => {
     const groupsByDate = new Map<string, typeof filteredMatches>()
@@ -85,6 +101,14 @@ export function MatchesPage() {
           groups={groups}
           onChange={setFilters}
         />
+      ) : null}
+
+      {!isLoading &&
+      !arePredictionsLoading &&
+      !errorMessage &&
+      matches.length > 0 &&
+      (!filters.phase || filters.phase === 'group_stage') ? (
+        <GroupStandingsSection groups={visibleStandings} />
       ) : null}
 
       {isLoading ? (

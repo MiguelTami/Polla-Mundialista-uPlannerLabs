@@ -26,4 +26,6 @@ export type Match = {
 export type MatchFilters = {
   phase: string
   group: string
+  date: string
+  status: '' | 'upcoming' | 'in_progress' | 'finished'
 }

@@ -1,4 +1,4 @@
-import type { MatchStatus } from './matches.types'
+import type { Match, MatchStatus } from './matches.types'
 
 const colombiaTimeZone = 'America/Bogota'
 
@@ -64,12 +64,35 @@ export function getDateGroupLabel(date: string) {
   }).format(new Date(date))
 }
 
+export function getDateFilterLabel(date: string) {
+  return new Intl.DateTimeFormat('es-CO', {
+    timeZone: colombiaTimeZone,
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  }).format(new Date(date))
+}
+
 export function isFinishedStatus(status: MatchStatus) {
   return ['finished', 'completed'].includes(status.toLowerCase())
 }
 
 export function hasMatchStarted(matchDate: string) {
   return new Date(matchDate).getTime() <= Date.now()
+}
+
+export function getMatchFilterStatus(
+  match: Match,
+): 'upcoming' | 'in_progress' | 'finished' {
+  if (
+    isFinishedStatus(match.status) &&
+    match.homeScore !== null &&
+    match.awayScore !== null
+  ) {
+    return 'finished'
+  }
+
+  return hasMatchStarted(match.matchDate) ? 'in_progress' : 'upcoming'
 }
 
 export function getMatchDateKey(date: string) {

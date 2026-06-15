@@ -4,6 +4,8 @@ import { PageHeader } from '../components/ui/PageHeader'
 import { simulateGroups } from '../features/bracket/bracket-engine'
 import { GroupStandingsSection } from '../features/groups/GroupStandingsSection'
 import {
+  getDateFilterLabel,
+  getMatchFilterStatus,
   formatPhase,
   getMatchDateKey,
   getDateGroupLabel,
@@ -30,7 +32,10 @@ export function MatchesPage() {
   const [filters, setFilters] = useState<MatchFilters>({
     phase: '',
     group: '',
+    date: '',
+    status: '',
   })
+  const [showStandings, setShowStandings] = useState(false)
 
   const phases = useMemo(
     () =>
@@ -44,12 +49,40 @@ export function MatchesPage() {
       [...new Set(matches.flatMap((match) => match.groupName ?? []))].sort(),
     [matches],
   )
+  const dates = useMemo(
+    () => {
+      const datesByKey = new Map<
+        string,
+        { value: string; label: string; matchCount: number }
+      >()
+
+      for (const match of matches) {
+        const value = getMatchDateKey(match.matchDate)
+        const current = datesByKey.get(value)
+
+        datesByKey.set(value, {
+          value,
+          label: getDateFilterLabel(match.matchDate),
+          matchCount: (current?.matchCount ?? 0) + 1,
+        })
+      }
+
+      return [...datesByKey.values()].sort((first, second) =>
+        first.value.localeCompare(second.value),
+      )
+    },
+    [matches],
+  )
   const filteredMatches = useMemo(
     () =>
       matches.filter(
         (match) =>
           (!filters.phase || match.phase === filters.phase) &&
-          (!filters.group || match.groupName === filters.group),
+          (!filters.group || match.groupName === filters.group) &&
+          (!filters.date ||
+            getMatchDateKey(match.matchDate) === filters.date) &&
+          (!filters.status ||
+            getMatchFilterStatus(match) === filters.status),
       ),
     [filters, matches],
   )
@@ -99,11 +132,44 @@ export function MatchesPage() {
           filters={filters}
           phases={phases}
           groups={groups}
+          dates={dates}
           onChange={setFilters}
         />
       ) : null}
 
       {!isLoading &&
+      !errorMessage &&
+      matches.length > 0 &&
+      (!filters.phase || filters.phase === 'group_stage') ? (
+        <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="font-black text-slate-950">
+                Tablas de posiciones
+              </h2>
+              <p className="mt-1 text-sm text-slate-600">
+                Consulta cómo quedan los grupos según resultados y predicciones.
+              </p>
+            </div>
+            <button
+              type="button"
+              aria-expanded={showStandings}
+              onClick={() => setShowStandings((current) => !current)}
+              className={[
+                'inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-black transition',
+                showStandings
+                  ? 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+                  : 'bg-brand-700 text-white hover:bg-brand-800',
+              ].join(' ')}
+            >
+              {showStandings ? 'Ocultar tablas' : 'Mostrar tablas'}
+            </button>
+          </div>
+        </section>
+      ) : null}
+
+      {showStandings &&
+      !isLoading &&
       !arePredictionsLoading &&
       !errorMessage &&
       matches.length > 0 &&
@@ -152,7 +218,9 @@ export function MatchesPage() {
           action={
             <button
               type="button"
-              onClick={() => setFilters({ phase: '', group: '' })}
+              onClick={() =>
+                setFilters({ phase: '', group: '', date: '', status: '' })
+              }
               className="rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-bold text-white"
             >
               Limpiar filtros

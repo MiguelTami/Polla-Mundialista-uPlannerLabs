@@ -51,7 +51,7 @@ export function DashboardPage() {
             Próximos partidos
           </p>
           <h2 className="mt-1 text-xl font-black text-slate-950">
-            Prepara tus marcadores
+            Partidos por jornada
           </h2>
         </div>
         <div className="mt-5">

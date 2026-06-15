@@ -56,7 +56,15 @@ export function MatchesPage() {
         { value: string; label: string; matchCount: number }
       >()
 
-      for (const match of matches) {
+      const matchesForDateFilter = matches.filter((match) => {
+        const status = getMatchFilterStatus(match)
+
+        if (filters.status === 'finished') return status === 'finished'
+        if (filters.status) return status === filters.status
+        return status !== 'finished'
+      })
+
+      for (const match of matchesForDateFilter) {
         const value = getMatchDateKey(match.matchDate)
         const current = datesByKey.get(value)
 
@@ -71,20 +79,23 @@ export function MatchesPage() {
         first.value.localeCompare(second.value),
       )
     },
-    [matches],
+    [filters.status, matches],
   )
+  const activeDate = dates.some((date) => date.value === filters.date)
+    ? filters.date
+    : ''
   const filteredMatches = useMemo(
     () =>
       matches.filter(
         (match) =>
           (!filters.phase || match.phase === filters.phase) &&
           (!filters.group || match.groupName === filters.group) &&
-          (!filters.date ||
-            getMatchDateKey(match.matchDate) === filters.date) &&
+          (!activeDate ||
+            getMatchDateKey(match.matchDate) === activeDate) &&
           (!filters.status ||
             getMatchFilterStatus(match) === filters.status),
       ),
-    [filters, matches],
+    [activeDate, filters, matches],
   )
   const simulatedGroups = useMemo(
     () => simulateGroups(matches, predictions),
@@ -129,7 +140,7 @@ export function MatchesPage() {
 
       {matches.length > 0 ? (
         <MatchesFilters
-          filters={filters}
+          filters={{ ...filters, date: activeDate }}
           phases={phases}
           groups={groups}
           dates={dates}

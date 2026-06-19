@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "sync:results": "node scripts/sync-world-cup-results.mjs"
+    "sync:results": "node scripts/sync-world-cup-results.mjs",
+    "users:validate": "node scripts/create-users.mjs",
+    "users:create": "node scripts/create-users.mjs --execute"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",

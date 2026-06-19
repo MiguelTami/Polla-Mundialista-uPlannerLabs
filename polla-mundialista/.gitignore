@@ -13,6 +13,7 @@ dist
 dist-ssr
 *.local
 supabase/.temp/
+scripts/users-to-create.mjs
 
 # Editor directories and files
 .vscode/*

@@ -110,6 +110,19 @@ secretos en GitHub Actions:
 La clave `service_role` nunca debe configurarse en Vercel ni usar el prefijo
 `VITE_`. El workflow también puede ejecutarse manualmente desde GitHub Actions.
 
+## Creación administrativa de usuarios
+
+Las cuentas pueden prepararse sin enviar correos de confirmación:
+
+1. Edita `scripts/users-to-create.mjs`. Este archivo está ignorado por Git.
+2. Configura temporalmente `SUPABASE_SERVICE_ROLE_KEY` en `.env`.
+3. Ejecuta `npm run users:validate` para revisar los datos sin crear cuentas.
+4. Ejecuta `npm run users:create` para crear y confirmar las cuentas.
+
+El script omite correos que ya existen, no imprime contraseñas y genera el
+perfil mediante el trigger de Supabase Auth. La plantilla versionada se
+encuentra en `scripts/users-to-create.example.mjs`.
+
 ## Estructura
 
 ```text

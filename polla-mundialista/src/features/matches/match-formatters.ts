@@ -8,9 +8,20 @@ const phaseLabels: Record<string, string> = {
   round_of_32: 'Dieciseisavos de final',
   round_of_16: 'Octavos de final',
   quarter_final: 'Cuartos de final',
-  semifinal: 'Semifinal',
+  semi_final: 'Semifinal',
   third_place: 'Tercer puesto',
   final: 'Final',
+}
+
+const phaseOrder: Record<string, number> = {
+  group: 0,
+  group_stage: 0,
+  round_of_32: 1,
+  round_of_16: 2,
+  quarter_final: 3,
+  semi_final: 4,
+  third_place: 5,
+  final: 6,
 }
 
 const statusLabels: Record<string, string> = {
@@ -24,6 +35,13 @@ const statusLabels: Record<string, string> = {
 
 export function formatPhase(phase: string) {
   return phaseLabels[phase.toLowerCase()] ?? phase.replaceAll('_', ' ')
+}
+
+export function comparePhases(firstPhase: string, secondPhase: string) {
+  const firstOrder = phaseOrder[firstPhase.toLowerCase()] ?? Number.MAX_VALUE
+  const secondOrder = phaseOrder[secondPhase.toLowerCase()] ?? Number.MAX_VALUE
+
+  return firstOrder - secondOrder || firstPhase.localeCompare(secondPhase)
 }
 
 export function formatMatchStatus(status: MatchStatus) {

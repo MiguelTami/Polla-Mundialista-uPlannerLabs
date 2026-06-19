@@ -4,6 +4,7 @@ import { PageHeader } from '../components/ui/PageHeader'
 import { simulateGroups } from '../features/bracket/bracket-engine'
 import { GroupStandingsSection } from '../features/groups/GroupStandingsSection'
 import {
+  comparePhases,
   getDateFilterLabel,
   getMatchFilterStatus,
   formatPhase,
@@ -12,7 +13,10 @@ import {
 } from '../features/matches/match-formatters'
 import { MatchCard } from '../features/matches/MatchCard'
 import { MatchCardSkeleton } from '../features/matches/MatchCardSkeleton'
-import { MatchesFilters } from '../features/matches/MatchesFilters'
+import {
+  MatchesFilters,
+  type GroupFilterOption,
+} from '../features/matches/MatchesFilters'
 import type { MatchFilters } from '../features/matches/matches.types'
 import { useMatches } from '../features/matches/useMatches'
 import { hasMatchStarted } from '../features/matches/match-formatters'
@@ -40,15 +44,42 @@ export function MatchesPage() {
   const phases = useMemo(
     () =>
       [...new Set(matches.map((match) => match.phase))]
-        .sort()
+        .sort(comparePhases)
         .map((phase) => ({ value: phase, label: formatPhase(phase) })),
     [matches],
   )
-  const groups = useMemo(
-    () =>
-      [...new Set(matches.flatMap((match) => match.groupName ?? []))].sort(),
-    [matches],
-  )
+  const groups = useMemo<GroupFilterOption[]>(() => {
+    const teamsByGroup = new Map<
+      string,
+      Map<string, NonNullable<(typeof matches)[number]['homeTeam']>>
+    >()
+
+    for (const match of matches) {
+      if (!match.groupName) continue
+
+      const groupTeams =
+        teamsByGroup.get(match.groupName) ??
+        new Map<string, NonNullable<(typeof matches)[number]['homeTeam']>>()
+
+      for (const team of [match.homeTeam, match.awayTeam]) {
+        if (team) groupTeams.set(String(team.id), team)
+      }
+
+      teamsByGroup.set(match.groupName, groupTeams)
+    }
+
+    return [...teamsByGroup.entries()]
+      .sort(([firstGroup], [secondGroup]) =>
+        firstGroup.localeCompare(secondGroup),
+      )
+      .map(([group, teams]) => ({
+        value: group,
+        label: `Grupo ${group}`,
+        teams: [...teams.values()].sort((firstTeam, secondTeam) =>
+          firstTeam.name.localeCompare(secondTeam.name),
+        ),
+      }))
+  }, [matches])
   const dates = useMemo(
     () => {
       const datesByKey = new Map<

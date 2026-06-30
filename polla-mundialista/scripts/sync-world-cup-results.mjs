@@ -19,6 +19,7 @@ const teamAliases = new Map(
     Australia: 'AUS',
     Turkey: 'TUR',
     Germany: 'GER',
+    Curacao: 'CUW',
     Curaçao: 'CUW',
     'Ivory Coast': 'CIV',
     Ecuador: 'ECU',
@@ -55,21 +56,19 @@ const teamAliases = new Map(
 
 function decodeHtml(value) {
   return value
+    .replace(/<br\s*\/?>/gi, ' ')
     .replace(/<[^>]+>/g, '')
     .replaceAll('&#160;', ' ')
     .replaceAll('&#32;', ' ')
+    .replaceAll('&nbsp;', ' ')
     .replaceAll('&ndash;', '-')
     .replaceAll('&mdash;', '-')
     .replaceAll('&#8211;', '-')
     .replaceAll('&#8212;', '-')
     .replaceAll('&amp;', '&')
-    .replaceAll('â€“', '–')
-    .replaceAll('âˆ’', '−')
+    .replace(/[\u2010-\u2015\u2212]/g, '-')
+    .replace(/\s+/g, ' ')
     .trim()
-}
-
-function normalizeScoreSeparators(value) {
-  return value.replace(/[\u2010-\u2015\u2212]/g, '-')
 }
 
 function escapeRegExp(value) {
@@ -82,7 +81,7 @@ function parseKickoff(block) {
     block.match(/<div class="ftime">([\s\S]*?)<\/div>/)?.[1] ?? '',
   )
   const time = timeText.match(/(\d{1,2}):(\d{2})\s*([ap])\.m\./i)
-  const offset = timeText.match(/UTC[−-](\d{1,2})/)
+  const offset = timeText.match(/UTC[-−](\d{1,2})/)
   if (!date || !time || !offset) return null
 
   let hour = Number(time[1])
@@ -103,17 +102,27 @@ function parseKickoff(block) {
 function parseTeam(block, side) {
   const className = side === 'home' ? 'fhome' : 'faway'
   const content = block.match(
-    new RegExp(`<th class="${className}"[\\s\\S]*?<span itemprop="name">([\\s\\S]*?)<\\/span><\\/th>`),
+    new RegExp(
+      `<th[^>]*class="[^"]*\\b${className}\\b[^"]*"[\\s\\S]*?<span itemprop="name">([\\s\\S]*?)<\\/span><\\/th>`,
+    ),
   )?.[1]
   const name = content ? decodeHtml(content) : ''
   return teamAliases.get(name) ?? null
 }
 
-function parsePenaltyShootout(block, scoreText, homeTeamCode, awayTeamCode) {
-  const normalizedScore = normalizeScoreSeparators(scoreText)
-  const scorePenaltyText = normalizedScore.match(
-    /\((\d+)\s*-\s*(\d+)\s*p(?:en)?\.?\)/i,
+function parseMatchNumber(block, scoreText) {
+  return (
+    Number(scoreText.match(/Match\s+(\d+)/i)?.[1]) ||
+    Number(decodeHtml(block).match(/Match\s+(\d+)/i)?.[1]) ||
+    null
   )
+}
+
+function parsePenaltyShootout(block, scoreText, homeTeamCode, awayTeamCode) {
+  const scorePenaltyText =
+    scoreText.match(/\((\d+)\s*-\s*(\d+)\s*p(?:en)?\.?\)/i) ??
+    decodeHtml(block).match(/\((\d+)\s*-\s*(\d+)\s*p(?:en)?\.?\)/i)
+
   if (scorePenaltyText) {
     return {
       homePenalties: Number(scorePenaltyText[1]),
@@ -121,7 +130,7 @@ function parsePenaltyShootout(block, scoreText, homeTeamCode, awayTeamCode) {
     }
   }
 
-  const blockText = normalizeScoreSeparators(decodeHtml(block)).replace(/\s+/g, ' ')
+  const blockText = decodeHtml(block)
   for (const [teamName, teamCode] of teamAliases) {
     const penaltyText = blockText.match(
       new RegExp(
@@ -159,41 +168,36 @@ export function parseWorldCupPage(html) {
     .slice(1)
     .map((block) => {
       const scoreText = decodeHtml(
-        block.match(/<th class="fscore">([\s\S]*?)<\/th>/)?.[1] ?? '',
+        block.match(/<th[^>]*class="[^"]*\bfscore\b[^"]*"[^>]*>([\s\S]*?)<\/th>/)?.[1] ?? '',
       )
       const homeTeamCode = parseTeam(block, 'home')
       const awayTeamCode = parseTeam(block, 'away')
-      const matchNumber = Number(scoreText.match(/Match\s+(\d+)/)?.[1]) || null
-      const parsedScore = normalizeScoreSeparators(scoreText).match(
-        /(\d+)\s*-\s*(\d+)/,
-      )
-      const parsedPenalties = parsePenaltyShootout(
+      const matchNumber = parseMatchNumber(block, scoreText)
+      const score = scoreText.match(/(\d+)\s*-\s*(\d+)/)
+      const penalties = parsePenaltyShootout(
         block,
         scoreText,
         homeTeamCode,
         awayTeamCode,
       )
-      const score = scoreText.match(/(\d+)\s*[–-]\s*(\d+)/)
-      const penalties = scoreText.match(/\((\d+)\s*[–-]\s*(\d+)\s*p(?:en)?\.?\)/i)
 
       return {
         matchNumber,
         matchDate: parseKickoff(block),
         homeTeamCode,
         awayTeamCode,
-        homeScore: parsedScore ? Number(parsedScore[1]) : null,
-        awayScore: parsedScore ? Number(parsedScore[2]) : null,
-        homePenalties: parsedPenalties.homePenalties,
-        awayPenalties: parsedPenalties.awayPenalties,
+        homeScore: score ? Number(score[1]) : null,
+        awayScore: score ? Number(score[2]) : null,
+        homePenalties: penalties.homePenalties,
+        awayPenalties: penalties.awayPenalties,
       }
     })
     .filter(
       (match) =>
         match.matchDate &&
-        ((Number.isInteger(match.matchNumber) &&
-          match.matchNumber >= 1 &&
-          match.matchNumber <= 104) ||
-          (match.homeTeamCode && match.awayTeamCode)),
+        Number.isInteger(match.matchNumber) &&
+        match.matchNumber >= 1 &&
+        match.matchNumber <= 104,
     )
 }
 

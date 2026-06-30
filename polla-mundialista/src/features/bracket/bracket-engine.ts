@@ -230,7 +230,9 @@ export function buildBracket(
       official?.status === 'finished' &&
       official.homeScore !== null &&
       official.awayScore !== null
-    const useOfficialTeams = Boolean(official?.homeTeam && official.awayTeam)
+    const useOfficialTeams =
+      Boolean(official?.homeTeam && official.awayTeam) &&
+      (matchNumber <= 88 || isFinished)
     const resolvedHome =
       useOfficialTeams && official?.homeTeam
         ? entrant(official.homeTeam, official.homeTeam.name, true)

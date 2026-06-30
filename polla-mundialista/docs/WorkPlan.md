@@ -412,10 +412,10 @@ Automatizar el sistema de puntuación.
 | Acierto                      | Puntos |
 | ---------------------------- | -----: |
 | Marcador exacto              |      5 |
+| Ganador y diferencia exacta  |      4 |
 | Ganador correcto             |      3 |
 | Empate correcto              |      3 |
 | Diferencia de goles correcta |      1 |
-| Clasificado correcto         |      5 |
 | Campeón correcto             |     20 |
 | Subcampeón correcto          |     10 |
 

@@ -181,11 +181,19 @@ begin
       or target_match.winner_team_id is null
     then 0
     else
-      case when prediction.predicted_winner_id = target_match.winner_team_id
-        then 5 else 0 end
-      + case when prediction.predicted_home_score = target_match.home_score
+      case
+        when prediction.predicted_home_score = target_match.home_score
           and prediction.predicted_away_score = target_match.away_score
-        then 5 else 0 end
+          then 5
+        when prediction.predicted_winner_id = target_match.winner_team_id
+          and (target_match.home_score - target_match.away_score) <> 0
+          and (prediction.predicted_home_score - prediction.predicted_away_score)
+            = (target_match.home_score - target_match.away_score)
+          then 4
+        when prediction.predicted_winner_id = target_match.winner_team_id
+          then 3
+        else 0
+      end
       + case when p_match_number = 104
           and prediction.predicted_winner_id = target_match.winner_team_id
         then 20 else 0 end
@@ -311,7 +319,7 @@ with user_scores as (
       user_id,
       sum(points_awarded)::bigint as points,
       count(*)::bigint as predictions_count,
-      count(*) filter (where points_awarded in (5, 10, 35, 40))::bigint
+      count(*) filter (where points_awarded in (5, 35))::bigint
         as exact_scores,
       count(*) filter (where points_awarded > 0)::bigint
         as correct_outcomes

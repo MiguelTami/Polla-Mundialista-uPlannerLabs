@@ -194,11 +194,11 @@ La clasificación se ordenará por puntaje total descendente.
 
 ## Eliminatorias
 
-| Evento               | Puntos |
-| -------------------- | ------ |
-| Clasificado correcto | 5      |
-| Marcador exacto      | 5      |
-| Ganador correcto     | 3      |
+| Evento                                 | Puntos |
+| -------------------------------------- | ------ |
+| Marcador exacto                        | 5      |
+| Ganador correcto y diferencia correcta | 4      |
+| Ganador correcto                       | 3      |
 
 ---
 

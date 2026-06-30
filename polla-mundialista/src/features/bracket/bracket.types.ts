@@ -52,6 +52,8 @@ export type BracketMatch = {
   matchDate: string | null
   actualHomeScore: number | null
   actualAwayScore: number | null
+  actualHomePenaltyScore: number | null
+  actualAwayPenaltyScore: number | null
   actualWinnerId: number | null
   isFinished: boolean
   isLocked: boolean

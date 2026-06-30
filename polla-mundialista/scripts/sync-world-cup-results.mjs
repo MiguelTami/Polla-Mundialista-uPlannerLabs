@@ -184,6 +184,8 @@ export async function syncResults() {
         p_away_team_code: match.awayTeamCode,
         p_home_score: match.homeScore,
         p_away_score: match.awayScore,
+        p_home_penalty_score: match.homePenalties,
+        p_away_penalty_score: match.awayPenalties,
         p_winner_team_code: winnerCode,
         p_status:
           match.homeScore === null || match.awayScore === null

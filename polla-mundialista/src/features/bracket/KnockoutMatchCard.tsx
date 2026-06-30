@@ -109,6 +109,12 @@ export function KnockoutMatchCard({ match, onSaved }: KnockoutMatchCardProps) {
       {match.isFinished ? (
         <div className="mb-3 rounded-xl bg-slate-950 px-3 py-2 text-center text-sm font-black text-white">
           Resultado real: {match.actualHomeScore} - {match.actualAwayScore}
+          {match.actualHomePenaltyScore !== null &&
+          match.actualAwayPenaltyScore !== null ? (
+            <span className="ml-1 text-slate-300">
+              ({match.actualHomePenaltyScore} - {match.actualAwayPenaltyScore} pen.)
+            </span>
+          ) : null}
           {match.prediction ? (
             <span className="ml-2 text-brand-200">
               {match.prediction.pointsAwarded} pts

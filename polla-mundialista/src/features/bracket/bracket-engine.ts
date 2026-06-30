@@ -230,8 +230,7 @@ export function buildBracket(
       official?.status === 'finished' &&
       official.homeScore !== null &&
       official.awayScore !== null
-    const useOfficialTeams =
-      isLocked && official?.homeTeam !== null && official?.awayTeam !== null
+    const useOfficialTeams = Boolean(official?.homeTeam && official.awayTeam)
     const resolvedHome =
       useOfficialTeams && official?.homeTeam
         ? entrant(official.homeTeam, official.homeTeam.name, true)
@@ -247,6 +246,8 @@ export function buildBracket(
       matchDate: official?.matchDate ?? null,
       actualHomeScore: isFinished ? official.homeScore : null,
       actualAwayScore: isFinished ? official.awayScore : null,
+      actualHomePenaltyScore: isFinished ? official.homePenaltyScore : null,
+      actualAwayPenaltyScore: isFinished ? official.awayPenaltyScore : null,
       actualWinnerId:
         isFinished && official.winnerTeamId
           ? Number(official.winnerTeamId)
@@ -283,8 +284,42 @@ export function buildBracket(
 
   function winnerOf(matchNumber: number): BracketEntrant {
     const sourceMatch = matchesByNumber.get(matchNumber)
-    const winnerId =
-      sourceMatch?.actualWinnerId ?? sourceMatch?.prediction?.winnerId
+    const official = officialByNumber.get(matchNumber)
+    const officialIsFinished =
+      official?.status === 'finished' &&
+      official.homeScore !== null &&
+      official.awayScore !== null
+    const officialWinnerId =
+      officialIsFinished && official?.winnerTeamId
+        ? official.winnerTeamId
+        : null
+    const penaltyWinner =
+      officialIsFinished &&
+      official?.homePenaltyScore !== null &&
+      official?.awayPenaltyScore !== null
+        ? official.homePenaltyScore > official.awayPenaltyScore
+          ? official.homeTeam
+          : official.awayPenaltyScore > official.homePenaltyScore
+            ? official.awayTeam
+            : null
+        : null
+    const officialWinner =
+      penaltyWinner ??
+      (officialWinnerId && official
+        ? [official.homeTeam, official.awayTeam].find(
+            (candidate) => String(candidate?.id) === String(officialWinnerId),
+          ) ?? null
+        : null)
+
+    if (officialWinner) {
+      return entrant(officialWinner, officialWinner.name, true)
+    }
+
+    if (officialIsFinished || sourceMatch?.isFinished) {
+      return entrant(null, `Ganador M${matchNumber}`, false)
+    }
+
+    const winnerId = sourceMatch?.prediction?.winnerId
     const team =
       winnerId && sourceMatch
         ? [sourceMatch.home.team, sourceMatch.away.team].find(

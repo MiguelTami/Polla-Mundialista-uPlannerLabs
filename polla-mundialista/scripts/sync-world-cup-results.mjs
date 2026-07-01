@@ -1,4 +1,18 @@
+import { readFile } from 'node:fs/promises'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 const sourceUrl = 'https://en.wikipedia.org/wiki/2026_FIFA_World_Cup'
+const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
+const worldCupData = JSON.parse(
+  await readFile(join(rootDir, 'src', 'data', 'world-cup-2026.json'), 'utf8'),
+)
+const fixtureByTeamPair = new Map(
+  worldCupData.matches.map((match) => [
+    `${match.homeTeamCode}|${match.awayTeamCode}`,
+    match.matchNumber,
+  ]),
+)
 
 const teamAliases = new Map(
   Object.entries({
@@ -110,12 +124,14 @@ function parseTeam(block, side) {
   return teamAliases.get(name) ?? null
 }
 
-function parseMatchNumber(block, scoreText) {
-  return (
-    Number(scoreText.match(/Match\s+(\d+)/i)?.[1]) ||
-    Number(decodeHtml(block).match(/Match\s+(\d+)/i)?.[1]) ||
-    null
-  )
+function parseMatchNumber(block, scoreText, homeTeamCode, awayTeamCode) {
+  const explicitMatchNumber = Number(scoreText.match(/Match\s+(\d+)/i)?.[1])
+  if (explicitMatchNumber) return explicitMatchNumber
+
+  const reportNumber = Number(decodeHtml(block).match(/Report\s+(\d+)/i)?.[1])
+  if (reportNumber >= 73 && reportNumber <= 104) return reportNumber
+
+  return fixtureByTeamPair.get(`${homeTeamCode}|${awayTeamCode}`) ?? null
 }
 
 function parsePenaltyShootout(block, scoreText, homeTeamCode, awayTeamCode) {
@@ -131,6 +147,14 @@ function parsePenaltyShootout(block, scoreText, homeTeamCode, awayTeamCode) {
   }
 
   const blockText = decodeHtml(block)
+  const penaltyRowText = blockText.match(/Penalties[\s\S]*?(\d+)\s*-\s*(\d+)/i)
+  if (penaltyRowText) {
+    return {
+      homePenalties: Number(penaltyRowText[1]),
+      awayPenalties: Number(penaltyRowText[2]),
+    }
+  }
+
   for (const [teamName, teamCode] of teamAliases) {
     const penaltyText = blockText.match(
       new RegExp(
@@ -172,7 +196,12 @@ export function parseWorldCupPage(html) {
       )
       const homeTeamCode = parseTeam(block, 'home')
       const awayTeamCode = parseTeam(block, 'away')
-      const matchNumber = parseMatchNumber(block, scoreText)
+      const matchNumber = parseMatchNumber(
+        block,
+        scoreText,
+        homeTeamCode,
+        awayTeamCode,
+      )
       const score = scoreText.match(/(\d+)\s*-\s*(\d+)/)
       const penalties = parsePenaltyShootout(
         block,
@@ -234,6 +263,10 @@ export async function syncResults() {
     (match) => match.homeScore !== null && match.awayScore !== null,
   )
 
+  if (matches.length === 0) {
+    throw new Error('No matches were parsed from the World Cup source.')
+  }
+
   for (const match of matches) {
     const winnerCode =
       match.homeScore > match.awayScore
@@ -266,7 +299,13 @@ export async function syncResults() {
     })
   }
 
-  return { parsed: matches.length, finished: finished.length }
+  return {
+    parsed: matches.length,
+    finished: finished.length,
+    withTeams: matches.filter(
+      (match) => match.homeTeamCode !== null && match.awayTeamCode !== null,
+    ).length,
+  }
 }
 
 if (process.argv[1]?.endsWith('sync-world-cup-results.mjs')) {

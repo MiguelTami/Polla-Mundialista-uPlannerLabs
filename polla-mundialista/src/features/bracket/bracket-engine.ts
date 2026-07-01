@@ -45,8 +45,28 @@ const roundOf32: Array<[number, RoundOf32Source, RoundOf32Source]> = [
 ]
 
 const laterRounds = [
-  { round: 'round_of_16' as const, matches: [[89, 73, 75], [90, 74, 77], [91, 76, 78], [92, 79, 80], [93, 83, 84], [94, 81, 82], [95, 86, 88], [96, 85, 87]] },
-  { round: 'quarter_final' as const, matches: [[97, 89, 90], [98, 93, 94], [99, 91, 92], [100, 95, 96]] },
+  {
+    round: 'round_of_16' as const,
+    matches: [
+      [89, 74, 77],
+      [90, 73, 75],
+      [91, 76, 78],
+      [92, 79, 80],
+      [93, 83, 84],
+      [94, 81, 82],
+      [95, 86, 88],
+      [96, 85, 87],
+    ],
+  },
+  {
+    round: 'quarter_final' as const,
+    matches: [
+      [97, 89, 90],
+      [98, 93, 94],
+      [99, 91, 92],
+      [100, 95, 96],
+    ],
+  },
   { round: 'semi_final' as const, matches: [[101, 97, 98], [102, 99, 100]] },
   { round: 'final' as const, matches: [[104, 101, 102]] },
 ]

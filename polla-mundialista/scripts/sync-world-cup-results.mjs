@@ -81,7 +81,7 @@ function parseKickoff(block) {
     block.match(/<div class="ftime">([\s\S]*?)<\/div>/)?.[1] ?? '',
   )
   const time = timeText.match(/(\d{1,2}):(\d{2})\s*([ap])\.m\./i)
-  const offset = timeText.match(/UTC[-−](\d{1,2})/)
+  const offset = timeText.match(/UTC\D?(\d{1,2})/)
   if (!date || !time || !offset) return null
 
   let hour = Number(time[1])

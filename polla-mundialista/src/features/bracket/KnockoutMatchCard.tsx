@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { saveKnockoutPrediction } from './bracket.service'
 import type {
   BracketMatch,
@@ -11,15 +11,44 @@ type KnockoutMatchCardProps = {
   onSaved: (prediction: KnockoutPrediction) => void
 }
 
+function alignPredictionToEntrants(match: BracketMatch) {
+  const prediction = match.prediction
+  const homeTeamId = match.home.team?.id
+  const awayTeamId = match.away.team?.id
+  if (!prediction || !homeTeamId || !awayTeamId) return prediction
+
+  const sameOrder =
+    String(prediction.homeTeamId) === String(homeTeamId) &&
+    String(prediction.awayTeamId) === String(awayTeamId)
+  if (sameOrder) return prediction
+
+  const reverseOrder =
+    String(prediction.homeTeamId) === String(awayTeamId) &&
+    String(prediction.awayTeamId) === String(homeTeamId)
+  if (!reverseOrder) return prediction
+
+  return {
+    ...prediction,
+    homeTeamId: Number(homeTeamId),
+    awayTeamId: Number(awayTeamId),
+    homeScore: prediction.awayScore,
+    awayScore: prediction.homeScore,
+  }
+}
+
 export function KnockoutMatchCard({ match, onSaved }: KnockoutMatchCardProps) {
+  const displayedPrediction = useMemo(
+    () => alignPredictionToEntrants(match),
+    [match],
+  )
   const [homeScore, setHomeScore] = useState(
-    match.prediction?.homeScore.toString() ?? '',
+    displayedPrediction?.homeScore.toString() ?? '',
   )
   const [awayScore, setAwayScore] = useState(
-    match.prediction?.awayScore.toString() ?? '',
+    displayedPrediction?.awayScore.toString() ?? '',
   )
   const [tieWinnerId, setTieWinnerId] = useState(
-    match.prediction?.winnerId.toString() ?? '',
+    displayedPrediction?.winnerId.toString() ?? '',
   )
   const [isSaving, setIsSaving] = useState(false)
   const [message, setMessage] = useState('')
@@ -46,6 +75,12 @@ export function KnockoutMatchCard({ match, onSaved }: KnockoutMatchCardProps) {
           : tieWinnerId
             ? Number(tieWinnerId)
             : null
+  const displayedHomeScore = canPredict
+    ? homeScore
+    : displayedPrediction?.homeScore.toString() ?? ''
+  const displayedAwayScore = canPredict
+    ? awayScore
+    : displayedPrediction?.awayScore.toString() ?? ''
 
   async function handleSave() {
     if (
@@ -130,7 +165,7 @@ export function KnockoutMatchCard({ match, onSaved }: KnockoutMatchCardProps) {
           <BracketTeam
             entrant={match.home}
             isWinner={
-              match.prediction?.winnerId === Number(match.home.team?.id)
+              displayedPrediction?.winnerId === Number(match.home.team?.id)
             }
           />
           <input
@@ -138,7 +173,7 @@ export function KnockoutMatchCard({ match, onSaved }: KnockoutMatchCardProps) {
             type="number"
             min="0"
             max="99"
-            value={homeScore}
+            value={displayedHomeScore}
             disabled={!canPredict}
             onChange={(event) => setHomeScore(event.target.value)}
             className="h-10 rounded-lg border border-slate-200 text-center text-sm font-black disabled:bg-slate-50"
@@ -148,7 +183,7 @@ export function KnockoutMatchCard({ match, onSaved }: KnockoutMatchCardProps) {
           <BracketTeam
             entrant={match.away}
             isWinner={
-              match.prediction?.winnerId === Number(match.away.team?.id)
+              displayedPrediction?.winnerId === Number(match.away.team?.id)
             }
           />
           <input
@@ -156,7 +191,7 @@ export function KnockoutMatchCard({ match, onSaved }: KnockoutMatchCardProps) {
             type="number"
             min="0"
             max="99"
-            value={awayScore}
+            value={displayedAwayScore}
             disabled={!canPredict}
             onChange={(event) => setAwayScore(event.target.value)}
             className="h-10 rounded-lg border border-slate-200 text-center text-sm font-black disabled:bg-slate-50"

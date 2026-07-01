@@ -7,11 +7,30 @@ const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
 const worldCupData = JSON.parse(
   await readFile(join(rootDir, 'src', 'data', 'world-cup-2026.json'), 'utf8'),
 )
+const knockoutFixtures = [
+  { matchNumber: 73, homeTeamCode: 'RSA', awayTeamCode: 'CAN' },
+  { matchNumber: 74, homeTeamCode: 'GER', awayTeamCode: 'PAR' },
+  { matchNumber: 75, homeTeamCode: 'NED', awayTeamCode: 'MAR' },
+  { matchNumber: 76, homeTeamCode: 'BRA', awayTeamCode: 'JPN' },
+  { matchNumber: 77, homeTeamCode: 'FRA', awayTeamCode: 'SWE' },
+  { matchNumber: 78, homeTeamCode: 'CIV', awayTeamCode: 'NOR' },
+  { matchNumber: 79, homeTeamCode: 'MEX', awayTeamCode: 'ECU' },
+  { matchNumber: 80, homeTeamCode: 'ENG', awayTeamCode: 'COD' },
+  { matchNumber: 81, homeTeamCode: 'USA', awayTeamCode: 'BIH' },
+  { matchNumber: 82, homeTeamCode: 'BEL', awayTeamCode: 'SEN' },
+  { matchNumber: 83, homeTeamCode: 'POR', awayTeamCode: 'CRO' },
+  { matchNumber: 84, homeTeamCode: 'ESP', awayTeamCode: 'AUT' },
+  { matchNumber: 85, homeTeamCode: 'SUI', awayTeamCode: 'ALG' },
+  { matchNumber: 86, homeTeamCode: 'ARG', awayTeamCode: 'CPV' },
+  { matchNumber: 87, homeTeamCode: 'COL', awayTeamCode: 'GHA' },
+  { matchNumber: 88, homeTeamCode: 'AUS', awayTeamCode: 'EGY' },
+]
+const fixtures = [...worldCupData.matches, ...knockoutFixtures]
 const fixtureByMatchNumber = new Map(
-  worldCupData.matches.map((match) => [match.matchNumber, match]),
+  fixtures.map((match) => [match.matchNumber, match]),
 )
 const fixtureByTeamPair = new Map()
-for (const match of worldCupData.matches) {
+for (const match of fixtures) {
   fixtureByTeamPair.set(
     `${match.homeTeamCode}|${match.awayTeamCode}`,
     match.matchNumber,
@@ -136,10 +155,12 @@ function parseMatchNumber(block, scoreText, homeTeamCode, awayTeamCode) {
   const explicitMatchNumber = Number(scoreText.match(/Match\s+(\d+)/i)?.[1])
   if (explicitMatchNumber) return explicitMatchNumber
 
-  const reportNumber = Number(decodeHtml(block).match(/Report\s+(\d+)/i)?.[1])
-  if (reportNumber >= 73 && reportNumber <= 104) return reportNumber
+  const fixtureMatchNumber = fixtureByTeamPair.get(
+    `${homeTeamCode}|${awayTeamCode}`,
+  )
+  if (fixtureMatchNumber) return fixtureMatchNumber
 
-  return fixtureByTeamPair.get(`${homeTeamCode}|${awayTeamCode}`) ?? null
+  return null
 }
 
 function parsePenaltyShootout(block, scoreText, homeTeamCode, awayTeamCode) {

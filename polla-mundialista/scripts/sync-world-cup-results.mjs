@@ -7,12 +7,20 @@ const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
 const worldCupData = JSON.parse(
   await readFile(join(rootDir, 'src', 'data', 'world-cup-2026.json'), 'utf8'),
 )
-const fixtureByTeamPair = new Map(
-  worldCupData.matches.map((match) => [
+const fixtureByMatchNumber = new Map(
+  worldCupData.matches.map((match) => [match.matchNumber, match]),
+)
+const fixtureByTeamPair = new Map()
+for (const match of worldCupData.matches) {
+  fixtureByTeamPair.set(
     `${match.homeTeamCode}|${match.awayTeamCode}`,
     match.matchNumber,
-  ]),
-)
+  )
+  fixtureByTeamPair.set(
+    `${match.awayTeamCode}|${match.homeTeamCode}`,
+    match.matchNumber,
+  )
+}
 
 const teamAliases = new Map(
   Object.entries({
@@ -186,6 +194,31 @@ function parsePenaltyShootout(block, scoreText, homeTeamCode, awayTeamCode) {
   }
 }
 
+function alignToFixtureOrder(match) {
+  const fixture = fixtureByMatchNumber.get(match.matchNumber)
+  if (!fixture) return match
+
+  const sameOrder =
+    fixture.homeTeamCode === match.homeTeamCode &&
+    fixture.awayTeamCode === match.awayTeamCode
+  if (sameOrder) return match
+
+  const reverseOrder =
+    fixture.homeTeamCode === match.awayTeamCode &&
+    fixture.awayTeamCode === match.homeTeamCode
+  if (!reverseOrder) return match
+
+  return {
+    ...match,
+    homeTeamCode: fixture.homeTeamCode,
+    awayTeamCode: fixture.awayTeamCode,
+    homeScore: match.awayScore,
+    awayScore: match.homeScore,
+    homePenalties: match.awayPenalties,
+    awayPenalties: match.homePenalties,
+  }
+}
+
 export function parseWorldCupPage(html) {
   return html
     .split(/class="footballbox"/)
@@ -210,7 +243,7 @@ export function parseWorldCupPage(html) {
         awayTeamCode,
       )
 
-      return {
+      return alignToFixtureOrder({
         matchNumber,
         matchDate: parseKickoff(block),
         homeTeamCode,
@@ -219,7 +252,7 @@ export function parseWorldCupPage(html) {
         awayScore: score ? Number(score[2]) : null,
         homePenalties: penalties.homePenalties,
         awayPenalties: penalties.awayPenalties,
-      }
+      })
     })
     .filter(
       (match) =>
